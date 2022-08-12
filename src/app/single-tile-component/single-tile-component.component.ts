@@ -27,7 +27,9 @@ export class SingleTileComponentComponent implements OnInit {
   @Input()
   point = { x: 0, y: 0 };
 
+  @HostBinding('style.height.px')
   height = squareHeigth;
+  @HostBinding('style.width.px')
   width = squareWigth;
 
   @HostBinding('style.left.px')
