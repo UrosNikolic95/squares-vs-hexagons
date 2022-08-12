@@ -11,5 +11,5 @@ export class TilesComponentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  field = generateFIeld(10);
+  field = generateFIeld(1);
 }

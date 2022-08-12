@@ -23,7 +23,7 @@ export function calculateABC(line: ILine) {
   const { p1, p2 } = line;
   const A = p2.y - p1.y;
   const B = p1.x - p2.x;
-  const C = A * p1.x - B * p1.y;
+  const C = A * p1.x + B * p1.y;
   return {
     A,
     B,
@@ -39,21 +39,66 @@ export function lineIntersection(l1: ILine, l2: ILine) {
     return null;
   }
   return {
-    x: B1 * C2 - C1 * B2,
-    y: A1 * C2 - A2 * C1,
+    x: (B2 * C1 - C2 * B1) / det,
+    y: (A1 * C2 - A2 * C1) / det,
   };
 }
 
+function getPoint1(diameter: number, radians: number) {
+  return {
+    x: diameter * Math.cos(radians),
+    y: diameter * Math.sin(radians),
+  };
+}
+
+function getPoint2(index: number) {
+  const degrees = index * 30 + 30;
+  const radians = degrees * radiansPerDegree;
+  const point = getPoint1(diameter, radians);
+  return {
+    x: point.x,
+    y: point.y,
+  };
+}
+
+function distanceFromBegining(point: IPoint) {
+  return Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
+}
+
+function getPoint3(index: number, div: number) {
+  if (index % div == 0) return getPoint2(index);
+  const i1 = index - (index % div);
+  const i2 = i1 + div;
+  const p1 = getPoint2(i1);
+  const p2 = getPoint2(i2);
+  const r = getPoint2(index);
+  const z = { x: 0, y: 0 };
+  return lineIntersection({ p1, p2 }, { p1: z, p2: r });
+}
+
 export function calculatePoints(shift = 0, modul = 2) {
-  return Array.from({ length: 12 }, (value, index) => {
-    const diameterPrim =
-      (index + shift) % modul == 0 ? diameter : triangleHeigth - spacing;
-    const degrees = index * 30 + 30;
-    const radians = degrees * radiansPerDegree;
-    const x = diameterPrim * Math.cos(radians) + triangleHeigth + spacing;
-    const y = diameterPrim * Math.sin(radians) + diameter;
-    return x.toFixed(2) + ',' + y.toFixed(2);
-  }).join(' ');
+  const points = Array.from({ length: 12 }, (value, index) => {
+    const point = getPoint3(index + shift, modul);
+    return point;
+  }) as IPoint[];
+  const xVal = points.map((el) => el?.x).filter((el) => el);
+  const maxX = Math.max(...xVal);
+  const minX = Math.min(...xVal);
+  const absDiffX = Math.abs(maxX - minX);
+
+  const yVal = points.map((el) => el?.y).filter((el) => el);
+  const maxY = Math.max(...yVal);
+  const minY = Math.min(...yVal);
+  const absDiffY = Math.abs(maxY - minY);
+
+  console.log(absDiffY, yVal);
+
+  points.forEach((el) => {
+    el.x += absDiffX / 2 + spacing;
+    el.y += absDiffY / 2 + spacing;
+  });
+
+  return points.map((el) => el.x.toFixed(2) + ',' + el.y.toFixed(2)).join(' ');
 }
 
 export const squareWigth = 2 * triangleHeigth;
