@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { TilesComponentComponent } from './tiles-component/tiles-component.component';
+import { SingleTileComponentComponent } from './single-tile-component/single-tile-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TilesComponentComponent
+    TilesComponentComponent,
+    SingleTileComponentComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

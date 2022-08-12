@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  position: absolute;
+}
+
+.hex {
+  stroke: black;
+  stroke-width: 1px;
+  fill: aqua;
+}
+
+.hex:hover {
+  opacity: calc(0.5);
+}
