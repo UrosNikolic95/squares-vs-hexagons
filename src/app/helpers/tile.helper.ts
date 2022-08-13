@@ -65,22 +65,23 @@ function distanceFromBegining(point: IPoint) {
   return Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
 }
 
-function getPoint3(index: number, div: number) {
-  if (index % div == 0) return getPoint2(index);
-  const i1 = index - (index % div);
+function getPoint3(index1: number, index2: number, div: number) {
+  if (index2 % div == 0) return getPoint2(index1);
+  const i1 = index1 - (index2 % div);
   const i2 = i1 + div;
   const p1 = getPoint2(i1);
   const p2 = getPoint2(i2);
-  const r = getPoint2(index);
+  const r = getPoint2(index1);
   const z = { x: 0, y: 0 };
   return lineIntersection({ p1, p2 }, { p1: z, p2: r });
 }
 
 export function calculatePoints(shift = 0, modul = 2) {
   const points = Array.from({ length: 12 }, (value, index) => {
-    const point = getPoint3(index + shift, modul);
+    const point = getPoint3(index, index + shift, modul);
     return point;
   }) as IPoint[];
+  console.log(points[0]);
   const xVal = points.map((el) => el?.x).filter((el) => el);
   const maxX = Math.max(...xVal);
   const minX = Math.min(...xVal);

@@ -88,7 +88,6 @@ export class SingleTileComponentComponent implements OnInit {
   keydown(element: Element, event: KeyboardEvent) {
     if (event.key == '1') {
       this.shift++;
-      console.log(this.shift);
       this.startPoints = this.endPoints;
       this.endPoints = calculatePoints(this.shift, this.modul);
       this.startTime = Date.now();
