@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import {
   calculatePoints,
-  spacing,
+  IPoint,
+  pointsToString,
   squareHeigth,
   squareWigth,
   triangleSide,
@@ -23,6 +24,22 @@ export class SingleTileComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.locationUpdate();
+    setInterval(() => this.calculatePoints(), 1000 / 30);
+  }
+
+  calculatePoints() {
+    if (this.endTime > Date.now()) {
+      const diff1 = this.endTime - this.startTime;
+      const diff2 = Date.now() - this.startTime;
+      const rel = diff2 / diff1;
+      const newPoints = this.startPoints.map((p, ind) => ({
+        x: p.x + (this.endPoints[ind].x - p.x) * rel,
+        y: p.y + (this.endPoints[ind].y - p.y) * rel,
+      }));
+      this.points = pointsToString(newPoints);
+    } else {
+      this.points = pointsToString(this.endPoints);
+    }
   }
 
   locationUpdate() {
@@ -60,19 +77,30 @@ export class SingleTileComponentComponent implements OnInit {
   shift = 0;
   modul = 2;
 
-  points = calculatePoints(this.shift);
+  startPoints: IPoint[] = [];
+  endPoints: IPoint[] = calculatePoints(this.shift);
+  startTime = 0;
+  endTime = 0;
+
+  points = pointsToString(this.endPoints);
 
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
-    console.log(event.key, this.shift);
     if (event.key == '1') {
       this.shift++;
-      this.points = calculatePoints(this.shift, this.modul);
+      console.log(this.shift);
+      this.startPoints = this.endPoints;
+      this.endPoints = calculatePoints(this.shift, this.modul);
+      this.startTime = Date.now();
+      this.endTime = this.startTime + 1000;
       this.locationUpdate();
     }
     if (event.key == '2') {
       this.modul = this.modul == 2 ? 3 : 2;
-      this.points = calculatePoints(this.shift, this.modul);
+      this.startPoints = this.endPoints;
+      this.endPoints = calculatePoints(this.shift, this.modul);
+      this.startTime = Date.now();
+      this.endTime = this.startTime + 1000;
       this.locationUpdate();
     }
   }

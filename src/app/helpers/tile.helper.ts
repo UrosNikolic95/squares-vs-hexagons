@@ -91,13 +91,15 @@ export function calculatePoints(shift = 0, modul = 2) {
   const minY = Math.min(...yVal);
   const absDiffY = Math.abs(maxY - minY);
 
-  console.log(absDiffY, yVal);
-
   points.forEach((el) => {
     el.x += absDiffX / 2 + spacing;
     el.y += absDiffY / 2 + spacing;
   });
 
+  return points;
+}
+
+export function pointsToString(points: IPoint[]) {
   return points.map((el) => el.x.toFixed(2) + ',' + el.y.toFixed(2)).join(' ');
 }
 
