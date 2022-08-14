@@ -63,14 +63,14 @@ export class SingleTileComponentComponent implements OnInit {
       const shift = y % 2 == 0 ? 0 : squareWigth / 2;
       this.x = x * squareWigth + shift;
       this.y = (y * triangleSide * 3) / 2;
-      this.height = squareHeigth;
-      this.width = squareWigth;
+      this.height = squareHeigth + 1000;
+      this.width = squareWigth + 1000;
     } else {
       const shift = x % 2 == 0 ? 0 : squareWigth / 2;
       this.y = y * squareWigth + shift;
       this.x = (x * triangleSide * 3) / 2;
-      this.height = squareWigth;
-      this.width = squareHeigth;
+      this.height = squareWigth + 1000;
+      this.width = squareHeigth + 1000;
     }
   }
 
@@ -78,14 +78,14 @@ export class SingleTileComponentComponent implements OnInit {
   point = { x: 0, y: 0 };
 
   @HostBinding('style.height.px')
-  height = squareHeigth;
+  height = squareHeigth + 1000;
   @HostBinding('style.width.px')
-  width = squareWigth;
+  width = squareWigth + 1000;
 
   @HostBinding('style.left.px')
-  x?: number = 0;
+  x?: number;
   @HostBinding('style.top.px')
-  y?: number = 0;
+  y?: number;
 
   shift = 0;
   modul = 2;

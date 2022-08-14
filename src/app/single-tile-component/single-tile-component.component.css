@@ -2,15 +2,5 @@
   display: block;
   background-color: black;
   position: absolute;
-  clip-path: circle(50%);
-}
-
-.hex {
-  stroke: black;
-  stroke-width: 1px;
-  fill: aqua;
-}
-
-.hex:hover {
-  opacity: calc(0.5);
+  overflow: visible;
 }
