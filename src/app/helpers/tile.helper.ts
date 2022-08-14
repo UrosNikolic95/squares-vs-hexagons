@@ -104,6 +104,12 @@ export function pointsToString(points: IPoint[]) {
   return points.map((el) => el.x.toFixed(2) + ',' + el.y.toFixed(2)).join(' ');
 }
 
+export function pointsToClipPathPoligon(points: IPoint[]) {
+  return `polygon(${points
+    .map((el) => el.x.toFixed(2) + 'px ' + el.y.toFixed(2) + 'px')
+    .join(',')})`;
+}
+
 export const squareWigth = 2 * triangleHeigth;
 export const squareHeigth = 2 * triangleSide;
 

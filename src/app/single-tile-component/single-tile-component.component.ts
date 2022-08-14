@@ -1,4 +1,11 @@
 import {
+  animate,
+  keyframes,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
   Component,
   HostBinding,
   HostListener,
@@ -8,6 +15,7 @@ import {
 import {
   calculatePoints,
   IPoint,
+  pointsToClipPathPoligon,
   pointsToString,
   squareHeigth,
   squareWigth,
@@ -18,28 +26,33 @@ import {
   selector: 'app-single-tile-component',
   templateUrl: './single-tile-component.component.html',
   styleUrls: ['./single-tile-component.component.css'],
+  animations: [
+    trigger('shape', [
+      transition('* => *', [
+        animate(
+          '1s',
+          keyframes([
+            style({
+              'clip-path': '{{ p1 }}',
+              top: '{{ y1 }}',
+              left: '{{ x1 }}',
+            }),
+            style({
+              'clip-path': '{{ p2 }}',
+              top: '{{ y2 }}',
+              left: '{{ x2 }}',
+            }),
+          ])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class SingleTileComponentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
     this.locationUpdate();
-    setInterval(() => this.calculatePoints(), 1000 / 30);
-  }
-
-  calculatePoints() {
-    if (this.endTime > Date.now()) {
-      const diff1 = this.endTime - this.startTime;
-      const diff2 = Date.now() - this.startTime;
-      const rel = diff2 / diff1;
-      const newPoints = this.startPoints.map((p, ind) => ({
-        x: p.x + (this.endPoints[ind].x - p.x) * rel,
-        y: p.y + (this.endPoints[ind].y - p.y) * rel,
-      }));
-      this.points = pointsToString(newPoints);
-    } else {
-      this.points = pointsToString(this.endPoints);
-    }
   }
 
   locationUpdate() {
@@ -54,8 +67,8 @@ export class SingleTileComponentComponent implements OnInit {
       this.width = squareWigth;
     } else {
       const shift = x % 2 == 0 ? 0 : squareWigth / 2;
-      this.x = (x * triangleSide * 3) / 2;
       this.y = y * squareWigth + shift;
+      this.x = (x * triangleSide * 3) / 2;
       this.height = squareWigth;
       this.width = squareHeigth;
     }
@@ -77,30 +90,43 @@ export class SingleTileComponentComponent implements OnInit {
   shift = 0;
   modul = 2;
 
-  startPoints: IPoint[] = [];
-  endPoints: IPoint[] = calculatePoints(this.shift);
-  startTime = 0;
-  endTime = 0;
+  @HostBinding('style.clip-path')
+  clipPath = pointsToClipPathPoligon(calculatePoints(this.shift));
 
-  points = pointsToString(this.endPoints);
+  @HostBinding('@shape')
+  shape = {
+    value: 0,
+    params: {
+      p1: '',
+      p2: pointsToClipPathPoligon(calculatePoints(this.shift)),
+      x1: '',
+      y1: '',
+      x2: this.x + 'px',
+      y2: this.y + 'px',
+    },
+  };
 
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
     if (event.key == '1') {
       this.shift++;
-      this.startPoints = this.endPoints;
-      this.endPoints = calculatePoints(this.shift, this.modul);
-      this.startTime = Date.now();
-      this.endTime = this.startTime + 1000;
-      this.locationUpdate();
     }
     if (event.key == '2') {
       this.modul = this.modul == 2 ? 3 : 2;
-      this.startPoints = this.endPoints;
-      this.endPoints = calculatePoints(this.shift, this.modul);
-      this.startTime = Date.now();
-      this.endTime = this.startTime + 1000;
-      this.locationUpdate();
     }
+
+    this.locationUpdate();
+    this.shape = {
+      value: Date.now(),
+      params: {
+        p1: this.shape.params.p2,
+        p2: pointsToClipPathPoligon(calculatePoints(this.shift, this.modul)),
+        x1: this.shape.params.x2,
+        y1: this.shape.params.y2,
+        x2: this.x + 'px',
+        y2: this.y + 'px',
+      },
+    };
+    this.clipPath = this.shape.params.p2;
   }
 }
