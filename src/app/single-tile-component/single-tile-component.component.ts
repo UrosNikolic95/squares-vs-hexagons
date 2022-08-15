@@ -14,11 +14,15 @@ import {
 } from '@angular/core';
 import {
   calculatePoints,
+  hexagon,
+  hexPoints,
   IPoint,
   pointsToClipPathPoligon,
   pointsToString,
+  square1,
   squareHeigth,
   squareWigth,
+  State,
   triangleSide,
 } from '../helpers/tile.helper';
 
@@ -106,21 +110,20 @@ export class SingleTileComponentComponent implements OnInit {
     },
   };
 
+  currentState = State.hex;
+
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
-    if (event.key == '1') {
-      this.shift++;
-    }
-    if (event.key == '2') {
-      this.modul = this.modul == 2 ? 3 : 2;
-    }
+    this.hexTransition(event.key);
+
+    console.log(this.currentState);
 
     this.locationUpdate();
     this.shape = {
       value: Date.now(),
       params: {
         p1: this.shape.params.p2,
-        p2: pointsToClipPathPoligon(calculatePoints(this.shift, this.modul)),
+        p2: hexPoints[this.currentState],
         x1: this.shape.params.x2,
         y1: this.shape.params.y2,
         x2: this.x + 'px',
@@ -128,5 +131,32 @@ export class SingleTileComponentComponent implements OnInit {
       },
     };
     this.clipPath = this.shape.params.p2;
+  }
+
+  hexTransition(key: string) {
+    if (key == '1' && this.currentState == State.hex) {
+      this.currentState = State.square1;
+      return;
+    }
+    if (key == '2' && this.currentState == State.hex) {
+      this.currentState = State.square2;
+      return;
+    }
+    if (key == '3' && this.currentState == State.hex) {
+      this.currentState = State.square3;
+      return;
+    }
+    if (key == '1' && this.currentState == State.square1) {
+      this.currentState = State.hex;
+      return;
+    }
+    if (key == '2' && this.currentState == State.square2) {
+      this.currentState = State.hex;
+      return;
+    }
+    if (key == '3' && this.currentState == State.square3) {
+      this.currentState = State.hex;
+      return;
+    }
   }
 }

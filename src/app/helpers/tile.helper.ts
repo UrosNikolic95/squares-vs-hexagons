@@ -44,17 +44,24 @@ export function lineIntersection(l1: ILine, l2: ILine) {
   };
 }
 
-function getPoint1(diameter: number, radians: number) {
+function getPointFromRadians(diameter: number, radians: number) {
   return {
     x: diameter * Math.cos(radians),
     y: diameter * Math.sin(radians),
   };
 }
 
+function getPointFromDegrees(diameter: number, degrees: number) {
+  return {
+    x: diameter * Math.cos(degrees * radiansPerDegree),
+    y: diameter * Math.sin(degrees * radiansPerDegree),
+  };
+}
+
 function getPoint2(index: number) {
   const degrees = index * 30 + 30;
   const radians = degrees * radiansPerDegree;
-  const point = getPoint1(diameter, radians);
+  const point = getPointFromRadians(diameter, radians);
   return {
     x: point.x,
     y: point.y,
@@ -76,28 +83,31 @@ function getPoint3(index1: number, index2: number, div: number) {
   return lineIntersection({ p1, p2 }, { p1: z, p2: r });
 }
 
-export function calculatePoints(shift = 0, modul = 2) {
-  const points = Array.from({ length: 12 }, (value, index) => {
-    const point = getPoint3(index, index + shift, modul);
-    return point;
-  }) as IPoint[];
-  console.log(points[0]);
-  const xVal = points.map((el) => el?.x).filter((el) => el);
-  const maxX = Math.max(...xVal);
-  const minX = Math.min(...xVal);
-  const absDiffX = Math.abs(maxX - minX);
+function getAbsDiff(points: IPoint[], getter: (el: IPoint) => number) {
+  const val = points.map(getter).filter((el) => el);
+  const max = Math.max(...val);
+  const min = Math.min(...val);
+  return Math.abs(max - min);
+}
 
-  const yVal = points.map((el) => el?.y).filter((el) => el);
-  const maxY = Math.max(...yVal);
-  const minY = Math.min(...yVal);
-  const absDiffY = Math.abs(maxY - minY);
+function adjustPoints(points: IPoint[]) {
+  const absDiffX = getAbsDiff(points, (el) => el.x);
+  const absDiffY = getAbsDiff(points, (el) => el.y);
 
   points.forEach((el) => {
     el.x += absDiffX / 2 + spacing;
     el.y += absDiffY / 2 + spacing;
   });
-
   return points;
+}
+
+export function calculatePoints(shift = 0, modul = 2) {
+  const points = Array.from({ length: 12 }, (value, index) => {
+    const point = getPoint3(index, index + shift, modul);
+    return point;
+  }) as IPoint[];
+
+  return adjustPoints(points);
 }
 
 export function pointsToString(points: IPoint[]) {
@@ -121,3 +131,53 @@ export function generateFIeld(a: number, b = a) {
     }))
   ).flat(2);
 }
+
+export const hexagon = adjustPoints(
+  Array.from({ length: 6 }, (_, index) =>
+    getPointFromDegrees(30, 30 + index * 60)
+  )
+);
+
+const diameter1 = 30;
+const diameter2 = diameter1 / Math.sqrt(2);
+
+export const square1 = adjustPoints([
+  getPointFromDegrees(diameter1, 30 + 0 * 60),
+  getPointFromDegrees(diameter2, 30 + 1 * 60),
+  getPointFromDegrees(diameter1, 30 + 2 * 60),
+  getPointFromDegrees(diameter1, 30 + 3 * 60),
+  getPointFromDegrees(diameter2, 30 + 4 * 60),
+  getPointFromDegrees(diameter1, 30 + 5 * 60),
+]);
+
+export const square2 = adjustPoints([
+  getPointFromDegrees(diameter1, 30 + 0 * 60),
+  getPointFromDegrees(diameter1, 30 + 1 * 60),
+  getPointFromDegrees(diameter2, 30 + 2 * 60),
+  getPointFromDegrees(diameter1, 30 + 3 * 60),
+  getPointFromDegrees(diameter1, 30 + 4 * 60),
+  getPointFromDegrees(diameter2, 30 + 5 * 60),
+]);
+
+export const square3 = adjustPoints([
+  getPointFromDegrees(diameter2, 30 + 0 * 60),
+  getPointFromDegrees(diameter1, 30 + 1 * 60),
+  getPointFromDegrees(diameter1, 30 + 2 * 60),
+  getPointFromDegrees(diameter2, 30 + 3 * 60),
+  getPointFromDegrees(diameter1, 30 + 4 * 60),
+  getPointFromDegrees(diameter1, 30 + 5 * 60),
+]);
+
+export enum State {
+  hex,
+  square1,
+  square2,
+  square3,
+}
+
+export const hexPoints = {
+  [State.hex]: pointsToClipPathPoligon(hexagon),
+  [State.square1]: pointsToClipPathPoligon(square1),
+  [State.square2]: pointsToClipPathPoligon(square2),
+  [State.square3]: pointsToClipPathPoligon(square3),
+};
