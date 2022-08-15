@@ -142,30 +142,30 @@ const diameter1 = 30;
 const diameter2 = diameter1 / Math.sqrt(2);
 
 export const square1 = adjustPoints([
-  getPointFromDegrees(diameter1, 30 + 0 * 60),
+  getPointFromDegrees(diameter1, 45 + 0 * 60),
   getPointFromDegrees(diameter2, 30 + 1 * 60),
-  getPointFromDegrees(diameter1, 30 + 2 * 60),
-  getPointFromDegrees(diameter1, 30 + 3 * 60),
+  getPointFromDegrees(diameter1, 15 + 2 * 60),
+  getPointFromDegrees(diameter1, 45 + 3 * 60),
   getPointFromDegrees(diameter2, 30 + 4 * 60),
-  getPointFromDegrees(diameter1, 30 + 5 * 60),
+  getPointFromDegrees(diameter1, 15 + 5 * 60),
 ]);
 
 export const square2 = adjustPoints([
-  getPointFromDegrees(diameter1, 30 + 0 * 60),
-  getPointFromDegrees(diameter1, 30 + 1 * 60),
+  getPointFromDegrees(diameter1, 15 + 0 * 60),
+  getPointFromDegrees(diameter1, 45 + 1 * 60),
   getPointFromDegrees(diameter2, 30 + 2 * 60),
-  getPointFromDegrees(diameter1, 30 + 3 * 60),
-  getPointFromDegrees(diameter1, 30 + 4 * 60),
+  getPointFromDegrees(diameter1, 15 + 3 * 60),
+  getPointFromDegrees(diameter1, 45 + 4 * 60),
   getPointFromDegrees(diameter2, 30 + 5 * 60),
 ]);
 
 export const square3 = adjustPoints([
   getPointFromDegrees(diameter2, 30 + 0 * 60),
-  getPointFromDegrees(diameter1, 30 + 1 * 60),
-  getPointFromDegrees(diameter1, 30 + 2 * 60),
+  getPointFromDegrees(diameter1, 15 + 1 * 60),
+  getPointFromDegrees(diameter1, 45 + 2 * 60),
   getPointFromDegrees(diameter2, 30 + 3 * 60),
-  getPointFromDegrees(diameter1, 30 + 4 * 60),
-  getPointFromDegrees(diameter1, 30 + 5 * 60),
+  getPointFromDegrees(diameter1, 15 + 4 * 60),
+  getPointFromDegrees(diameter1, 45 + 5 * 60),
 ]);
 
 export enum State {
