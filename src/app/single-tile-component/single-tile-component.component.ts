@@ -13,13 +13,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  calculatePoints,
-  hexagon,
   hexPoints,
-  IPoint,
-  pointsToClipPathPoligon,
-  pointsToString,
-  square1,
   squareHeigth,
   squareWigth,
   State,
@@ -34,7 +28,7 @@ import {
     trigger('shape', [
       transition('* => *', [
         animate(
-          '1s',
+          '0.5s',
           keyframes([
             style({
               'clip-path': '{{ p1 }}',
@@ -56,10 +50,10 @@ export class SingleTileComponentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.locationUpdate();
+    this.hexLocations();
   }
 
-  locationUpdate() {
+  hexLocations() {
     const x = this.point.x;
     const y = this.point.y;
 
@@ -68,6 +62,30 @@ export class SingleTileComponentComponent implements OnInit {
     this.y = (y * triangleSide * 3) / 2;
     this.height = squareHeigth + 1000;
     this.width = squareWigth + 1000;
+  }
+
+  square1Locations() {
+    const x = this.point.x;
+    const y = this.point.y;
+
+    this.x = x * squareWigth;
+    this.y = y * squareWigth;
+  }
+
+  square2Locations() {
+    const x = this.point.x;
+    const y = this.point.y;
+
+    this.x = x * squareWigth;
+    this.y = y * squareWigth;
+  }
+
+  square3Locations() {
+    const x = this.point.x;
+    const y = this.point.y;
+
+    this.x = x * squareWigth;
+    this.y = y * squareWigth;
   }
 
   @Input()
@@ -105,9 +123,6 @@ export class SingleTileComponentComponent implements OnInit {
   keydown(element: Element, event: KeyboardEvent) {
     this.hexTransition(event.key);
 
-    console.log(this.currentState);
-
-    this.locationUpdate();
     this.shape = {
       value: Date.now(),
       params: {
@@ -125,6 +140,7 @@ export class SingleTileComponentComponent implements OnInit {
   hexTransition(key: string) {
     if (key == '1' && this.currentState == State.hex) {
       this.currentState = State.square1;
+      this.square1Locations();
       return;
     }
     if (key == '2' && this.currentState == State.hex) {
@@ -137,6 +153,7 @@ export class SingleTileComponentComponent implements OnInit {
     }
     if (this.currentState != State.hex) {
       this.currentState = State.hex;
+      this.hexLocations();
       return;
     }
   }
