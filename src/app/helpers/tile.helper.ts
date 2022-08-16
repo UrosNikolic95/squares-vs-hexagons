@@ -144,7 +144,7 @@ export const hexagon = adjustPoints(
 export const diameter1 = hexSmallerDiameter * Math.sqrt(2);
 export const diameter2 = diameter1 / Math.sqrt(2);
 
-export const hexDistance = (diameter1 * Math.sqrt(3)) / 2;
+export const hexDistance = (hexDiameter * Math.sqrt(3)) / 2;
 
 export const square1 = adjustPoints([
   getPointFromDegrees(diameter1, 45 + 0 * 60),
