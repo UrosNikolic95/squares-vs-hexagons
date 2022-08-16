@@ -63,19 +63,11 @@ export class SingleTileComponentComponent implements OnInit {
     const x = this.point.x;
     const y = this.point.y;
 
-    if (this.shift % 2 == 0) {
-      const shift = y % 2 == 0 ? 0 : squareWigth / 2;
-      this.x = x * squareWigth + shift;
-      this.y = (y * triangleSide * 3) / 2;
-      this.height = squareHeigth + 1000;
-      this.width = squareWigth + 1000;
-    } else {
-      const shift = x % 2 == 0 ? 0 : squareWigth / 2;
-      this.y = y * squareWigth + shift;
-      this.x = (x * triangleSide * 3) / 2;
-      this.height = squareWigth + 1000;
-      this.width = squareHeigth + 1000;
-    }
+    const shift = y % 2 == 0 ? 0 : squareWigth / 2;
+    this.x = x * squareWigth + shift;
+    this.y = (y * triangleSide * 3) / 2;
+    this.height = squareHeigth + 1000;
+    this.width = squareWigth + 1000;
   }
 
   @Input()
@@ -91,26 +83,23 @@ export class SingleTileComponentComponent implements OnInit {
   @HostBinding('style.top.px')
   y?: number;
 
-  shift = 0;
-  modul = 2;
+  currentState = State.hex;
 
   @HostBinding('style.clip-path')
-  clipPath = pointsToClipPathPoligon(calculatePoints(this.shift));
+  clipPath = hexPoints[this.currentState];
 
   @HostBinding('@shape')
   shape = {
     value: 0,
     params: {
       p1: '',
-      p2: pointsToClipPathPoligon(calculatePoints(this.shift)),
+      p2: hexPoints[this.currentState],
       x1: '',
       y1: '',
       x2: this.x + 'px',
       y2: this.y + 'px',
     },
   };
-
-  currentState = State.hex;
 
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
