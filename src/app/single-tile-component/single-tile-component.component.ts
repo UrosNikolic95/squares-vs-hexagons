@@ -135,15 +135,7 @@ export class SingleTileComponentComponent implements OnInit {
       this.currentState = State.square3;
       return;
     }
-    if (key == '1' && this.currentState == State.square1) {
-      this.currentState = State.hex;
-      return;
-    }
-    if (key == '2' && this.currentState == State.square2) {
-      this.currentState = State.hex;
-      return;
-    }
-    if (key == '3' && this.currentState == State.square3) {
+    if (this.currentState != State.hex) {
       this.currentState = State.hex;
       return;
     }
