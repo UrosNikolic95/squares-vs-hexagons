@@ -51,7 +51,7 @@ function getPointFromRadians(diameter: number, radians: number) {
   };
 }
 
-function getPointFromDegrees(diameter: number, degrees: number) {
+export function getPointFromDegrees(diameter: number, degrees: number) {
   return {
     x: diameter * Math.cos(degrees * radiansPerDegree),
     y: diameter * Math.sin(degrees * radiansPerDegree),
@@ -138,8 +138,10 @@ export const hexagon = adjustPoints(
   )
 );
 
-const diameter1 = 30;
-const diameter2 = diameter1 / Math.sqrt(2);
+export const diameter1 = 30;
+export const diameter2 = diameter1 / Math.sqrt(2);
+
+export const hexDistance = (diameter1 * Math.sqrt(3)) / 2;
 
 export const square1 = adjustPoints([
   getPointFromDegrees(diameter1, 45 + 0 * 60),
@@ -181,3 +183,13 @@ export const hexPoints = {
   [State.square2]: pointsToClipPathPoligon(square2),
   [State.square3]: pointsToClipPathPoligon(square3),
 };
+
+export function calcualteCategory1(x: number, y: number) {
+  const q1 = ((y - (y % 2)) / 2 + x) % 2;
+  return q1 == 0;
+}
+export function calcualteCategory2(x: number, y: number) {
+  const yp = y + 1;
+  const q1 = ((yp - (yp % 2)) / 2 + x) % 2;
+  return q1 == 0;
+}

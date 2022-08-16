@@ -13,6 +13,12 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  calcualteCategory1,
+  calcualteCategory2,
+  diameter1,
+  diameter2,
+  getPointFromDegrees,
+  hexDistance,
   hexPoints,
   squareHeigth,
   squareWigth,
@@ -60,11 +66,11 @@ export class SingleTileComponentComponent implements OnInit {
     const shift = y % 2 == 0 ? 0 : squareWigth / 2;
     this.x = x * squareWigth + shift;
     this.y = (y * triangleSide * 3) / 2;
-    this.height = squareHeigth + 1000;
-    this.width = squareWigth + 1000;
   }
 
   square1Locations() {
+    this.color = 'black';
+
     const x = this.point.x;
     const y = this.point.y;
 
@@ -76,16 +82,34 @@ export class SingleTileComponentComponent implements OnInit {
     const x = this.point.x;
     const y = this.point.y;
 
-    this.x = x * squareWigth;
-    this.y = y * squareWigth;
+    this.hexLocations();
+    if (calcualteCategory1(x, y)) {
+      this.color = 'blue';
+      const translate = getPointFromDegrees(hexDistance, 60);
+      if (this.x != undefined && this.y != undefined) {
+        this.x += translate.x || 0;
+        this.y += translate.y || 0;
+      }
+    } else {
+      this.color = 'black';
+    }
   }
 
   square3Locations() {
     const x = this.point.x;
     const y = this.point.y;
 
-    this.x = x * squareWigth;
-    this.y = y * squareWigth;
+    this.hexLocations();
+    if (calcualteCategory2(x, y)) {
+      this.color = 'blue';
+      const translate = getPointFromDegrees(hexDistance, 120);
+      if (this.x != undefined && this.y != undefined) {
+        this.x += translate.x || 0;
+        this.y += translate.y || 0;
+      }
+    } else {
+      this.color = 'black';
+    }
   }
 
   @Input()
@@ -119,6 +143,9 @@ export class SingleTileComponentComponent implements OnInit {
     },
   };
 
+  @HostBinding('style.background-color')
+  color = 'black';
+
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
     this.hexTransition(event.key);
@@ -145,10 +172,12 @@ export class SingleTileComponentComponent implements OnInit {
     }
     if (key == '2' && this.currentState == State.hex) {
       this.currentState = State.square2;
+      this.square2Locations();
       return;
     }
     if (key == '3' && this.currentState == State.hex) {
       this.currentState = State.square3;
+      this.square3Locations();
       return;
     }
     if (this.currentState != State.hex) {
