@@ -132,13 +132,16 @@ export function generateFIeld(a: number, b = a) {
   ).flat(2);
 }
 
+export const hexDiameter = 30;
+export const hexSmallerDiameter = (triangleSide * Math.sqrt(3)) / 2;
+
 export const hexagon = adjustPoints(
   Array.from({ length: 6 }, (_, index) =>
-    getPointFromDegrees(30, 30 + index * 60)
+    getPointFromDegrees(hexDiameter, 30 + index * 60)
   )
 );
 
-export const diameter1 = 30;
+export const diameter1 = hexSmallerDiameter * Math.sqrt(2);
 export const diameter2 = diameter1 / Math.sqrt(2);
 
 export const hexDistance = (diameter1 * Math.sqrt(3)) / 2;
