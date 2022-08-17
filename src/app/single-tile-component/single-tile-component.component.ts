@@ -82,9 +82,6 @@ export class SingleTileComponentComponent implements OnInit {
     const x = calculateDiagonalRowCoordinateX1(this.point.x, this.point.y);
     const y = calculateDiagonalRowCoordinateY1(this.point.x, this.point.y);
 
-    this.q1 = x;
-    this.q2 = y;
-
     if (x % 2 == 0) {
       this.color = 'blue';
     } else {
@@ -97,9 +94,6 @@ export class SingleTileComponentComponent implements OnInit {
       this.y = translate1.y * y + translate2.y * x;
     }
   }
-
-  q1?: number;
-  q2?: number;
 
   square3Locations() {
     const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
