@@ -202,10 +202,14 @@ export function calculateDiagonalRowCoordinateX1(x: number, y: number) {
 export function calculateDiagonalRowCoordinateY1(x: number, y: number) {
   const xp = calculateDiagonalRowCoordinateX1(x, y);
   return y + (xp - (xp % 2)) / 2;
-  return y;
 }
 
 export function calculateDiagonalRowCoordinateX2(x: number, y: number) {
   const yp = y + 1;
   return x + (yp - (yp % 2)) / 2;
+}
+
+export function calculateDiagonalRowCoordinateY2(x: number, y: number) {
+  const xp = calculateDiagonalRowCoordinateX2(x, y);
+  return y - (xp - (xp % 2)) / 2;
 }

@@ -16,6 +16,7 @@ import {
   calculateDiagonalRowCoordinateX1,
   calculateDiagonalRowCoordinateX2,
   calculateDiagonalRowCoordinateY1,
+  calculateDiagonalRowCoordinateY2,
   diameter2,
   getPointFromDegrees,
   hexPoints,
@@ -102,7 +103,7 @@ export class SingleTileComponentComponent implements OnInit {
 
   square3Locations() {
     const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
-    const y = this.point.y;
+    const y = calculateDiagonalRowCoordinateY2(this.point.x, this.point.y);
 
     if (x % 2 == 0) {
       this.color = 'blue';
