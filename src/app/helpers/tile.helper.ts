@@ -191,8 +191,15 @@ export function calcualteCategory1(x: number, y: number) {
   const q1 = ((y - (y % 2)) / 2 + x) % 2;
   return q1 == 0;
 }
+
 export function calcualteCategory2(x: number, y: number) {
-  const yp = y + 1;
-  const q1 = ((yp - (yp % 2)) / 2 + x) % 2;
-  return q1 == 0;
+  return calcualteCategory1(x, y + 1);
+}
+
+export function calculateDiagonalRowCoordinateX(x: number, y: number) {
+  return x - (y - (y % 2)) / 2;
+}
+
+export function calculateDiagonalRowCoordinateY(x: number, y: number) {
+  return y;
 }
