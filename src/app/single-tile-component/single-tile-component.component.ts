@@ -68,15 +68,6 @@ export class SingleTileComponentComponent implements OnInit {
     this.y = (y * triangleSide * 3) / 2;
   }
 
-  squareShift() {
-    const x = this.point.x;
-    const y = this.point.y;
-
-    const shift = y % 2 == 0 ? 0 : squareWigth / 2;
-    this.x = x * squareWigth + shift;
-    this.y = (y * triangleSide * 3) / 2;
-  }
-
   square1Locations() {
     this.color = 'black';
 
