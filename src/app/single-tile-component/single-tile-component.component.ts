@@ -12,6 +12,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { ChildActivationStart } from '@angular/router';
 import {
   calcualteCategory1,
   calcualteCategory2,
@@ -80,7 +81,7 @@ export class SingleTileComponentComponent implements OnInit {
     this.y = y * squareWigth;
   }
 
-  square2Locations() {
+  squareLocations(angle1: number, angle2: number) {
     const x = calculateDiagonalRowCoordinateX(this.point.x, this.point.y);
     const y = calculateDiagonalRowCoordinateY(this.point.x, this.point.y);
 
@@ -89,12 +90,16 @@ export class SingleTileComponentComponent implements OnInit {
     } else {
       this.color = 'aqua';
     }
-    const translate1 = getPointFromDegrees(diameter2 * 2, 60);
-    const translate2 = getPointFromDegrees(diameter2 * 2, -30);
+    const translate1 = getPointFromDegrees(diameter2 * 2, angle1);
+    const translate2 = getPointFromDegrees(diameter2 * 2, angle2);
     if (this.x != undefined && this.y != undefined) {
       this.x = translate1.x * y + translate2.x * x;
       this.y = translate1.y * y + translate2.y * x;
     }
+  }
+
+  square2Locations() {
+    this.squareLocations(60, -30);
   }
 
   square3Locations() {
