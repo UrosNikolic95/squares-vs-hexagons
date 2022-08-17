@@ -15,6 +15,7 @@ import {
 import {
   calculateDiagonalRowCoordinateX1,
   calculateDiagonalRowCoordinateX2,
+  calculateDiagonalRowCoordinateY1,
   diameter2,
   getPointFromDegrees,
   hexPoints,
@@ -76,26 +77,28 @@ export class SingleTileComponentComponent implements OnInit {
     this.y = y * squareWigth;
   }
 
-  squareLocations(angle1: number, angle2: number) {
+  square2Locations() {
     const x = calculateDiagonalRowCoordinateX1(this.point.x, this.point.y);
-    const y = this.point.y;
+    const y = calculateDiagonalRowCoordinateY1(this.point.x, this.point.y);
+
+    this.q1 = x;
+    this.q2 = y;
 
     if (x % 2 == 0) {
       this.color = 'blue';
     } else {
       this.color = 'aqua';
     }
-    const translate1 = getPointFromDegrees(diameter2 * 2, angle1);
-    const translate2 = getPointFromDegrees(diameter2 * 2, angle2);
+    const translate1 = getPointFromDegrees(diameter2 * 2, 60);
+    const translate2 = getPointFromDegrees(diameter2 * 2, -30);
     if (this.x != undefined && this.y != undefined) {
       this.x = translate1.x * y + translate2.x * x;
       this.y = translate1.y * y + translate2.y * x;
     }
   }
 
-  square2Locations() {
-    this.squareLocations(60, -30);
-  }
+  q1?: number;
+  q2?: number;
 
   square3Locations() {
     const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
