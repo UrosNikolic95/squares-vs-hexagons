@@ -12,16 +12,11 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { ChildActivationStart } from '@angular/router';
 import {
-  calcualteCategory1,
-  calcualteCategory2,
-  calculateDiagonalRowCoordinateX,
-  calculateDiagonalRowCoordinateY,
-  diameter1,
+  calculateDiagonalRowCoordinateX1,
+  calculateDiagonalRowCoordinateX2,
   diameter2,
   getPointFromDegrees,
-  hexDistance,
   hexPoints,
   squareHeigth,
   squareWigth,
@@ -82,8 +77,8 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   squareLocations(angle1: number, angle2: number) {
-    const x = calculateDiagonalRowCoordinateX(this.point.x, this.point.y);
-    const y = calculateDiagonalRowCoordinateY(this.point.x, this.point.y);
+    const x = calculateDiagonalRowCoordinateX1(this.point.x, this.point.y);
+    const y = this.point.y;
 
     if (x % 2 == 0) {
       this.color = 'blue';
@@ -103,19 +98,19 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square3Locations() {
-    const x = this.point.x;
+    const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
     const y = this.point.y;
 
-    this.hexLocations();
-    if (calcualteCategory2(x, y)) {
+    if (x % 2 == 0) {
       this.color = 'blue';
-      const translate = getPointFromDegrees(hexDistance, 120);
-      if (this.x != undefined && this.y != undefined) {
-        this.x += translate.x || 0;
-        this.y += translate.y || 0;
-      }
     } else {
-      this.color = 'black';
+      this.color = 'aqua';
+    }
+    const translate1 = getPointFromDegrees(diameter2 * 2, 120);
+    const translate2 = getPointFromDegrees(diameter2 * 2, 30);
+    if (this.x != undefined && this.y != undefined) {
+      this.x = translate1.x * y + translate2.x * x;
+      this.y = translate1.y * y + translate2.y * x;
     }
   }
 

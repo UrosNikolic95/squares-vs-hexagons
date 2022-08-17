@@ -196,10 +196,10 @@ export function calcualteCategory2(x: number, y: number) {
   return calcualteCategory1(x, y + 1);
 }
 
-export function calculateDiagonalRowCoordinateX(x: number, y: number) {
+export function calculateDiagonalRowCoordinateX1(x: number, y: number) {
   return x - (y - (y % 2)) / 2;
 }
-
-export function calculateDiagonalRowCoordinateY(x: number, y: number) {
-  return y;
+export function calculateDiagonalRowCoordinateX2(x: number, y: number) {
+  const yp = y + 1;
+  return x + (yp - (yp % 2)) / 2;
 }
