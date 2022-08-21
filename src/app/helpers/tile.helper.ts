@@ -123,7 +123,7 @@ export function pointsToClipPathPoligon(points: IPoint[]) {
 export const squareWigth = 2 * triangleHeigth;
 export const squareHeigth = 2 * triangleSide;
 
-export function generateFIeld(a: number, b = a) {
+export function generateField(a: number, b = a) {
   return Array.from({ length: a }, (_, indexA) =>
     Array.from({ length: b }, (_, indexB) => ({
       x: indexA,
@@ -212,4 +212,10 @@ export function calculateDiagonalRowCoordinateX2(x: number, y: number) {
 export function calculateDiagonalRowCoordinateY2(x: number, y: number) {
   const xp = calculateDiagonalRowCoordinateX2(x, y);
   return y - (xp - (xp % 2)) / 2;
+}
+
+const colors = ['blue', 'red', 'green'];
+
+export function pickRandomColour() {
+  return colors[Math.floor(Math.random() * 3)];
 }

@@ -20,6 +20,7 @@ import {
   diameter2,
   getPointFromDegrees,
   hexPoints,
+  pickRandomColour,
   squareHeigth,
   squareWigth,
   State,
@@ -69,8 +70,6 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square1Locations() {
-    this.color = 'black';
-
     const x = this.point.x;
     const y = this.point.y;
 
@@ -82,11 +81,6 @@ export class SingleTileComponentComponent implements OnInit {
     const x = calculateDiagonalRowCoordinateX1(this.point.x, this.point.y);
     const y = calculateDiagonalRowCoordinateY1(this.point.x, this.point.y);
 
-    if (x % 2 == 0) {
-      this.color = 'blue';
-    } else {
-      this.color = 'aqua';
-    }
     const translate1 = getPointFromDegrees(diameter2 * 2, 60);
     const translate2 = getPointFromDegrees(diameter2 * 2, -30);
     if (this.x != undefined && this.y != undefined) {
@@ -99,11 +93,6 @@ export class SingleTileComponentComponent implements OnInit {
     const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
     const y = calculateDiagonalRowCoordinateY2(this.point.x, this.point.y);
 
-    if (x % 2 == 0) {
-      this.color = 'blue';
-    } else {
-      this.color = 'aqua';
-    }
     const translate1 = getPointFromDegrees(diameter2 * 2, 120);
     const translate2 = getPointFromDegrees(diameter2 * 2, 30);
     if (this.x != undefined && this.y != undefined) {
@@ -144,7 +133,7 @@ export class SingleTileComponentComponent implements OnInit {
   };
 
   @HostBinding('style.background-color')
-  color = 'black';
+  color = pickRandomColour();
 
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
@@ -162,6 +151,8 @@ export class SingleTileComponentComponent implements OnInit {
       },
     };
     this.clipPath = this.shape.params.p2;
+
+    this.setOpacity();
   }
 
   hexTransition(key: string) {
@@ -180,10 +171,30 @@ export class SingleTileComponentComponent implements OnInit {
       this.square3Locations();
       return;
     }
-    if (this.currentState != State.hex) {
+    if (this.currentState != State.hex && ['1', '2', '3'].includes(key)) {
       this.currentState = State.hex;
       this.hexLocations();
       return;
     }
   }
+
+  setOpacity() {
+    if (
+      this.selectedPoint.x == this.point.x &&
+      this.selectedPoint.y == this.point.y
+    ) {
+      this.opacity = 0.5;
+    } else {
+      this.opacity = 1;
+    }
+  }
+
+  @HostBinding('style.opacity')
+  opacity = 1;
+
+  @Input()
+  selectedPoint = {
+    x: 0,
+    y: 0,
+  };
 }
