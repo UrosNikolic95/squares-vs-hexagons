@@ -196,21 +196,21 @@ export function calcualteCategory2(x: number, y: number) {
   return calcualteCategory1(x, y + 1);
 }
 
-export function calculateDiagonalRowCoordinateX1(x: number, y: number) {
+export function calculateX1(x: number, y: number) {
   return x - (y - (y % 2)) / 2;
 }
-export function calculateDiagonalRowCoordinateY1(x: number, y: number) {
-  const xp = calculateDiagonalRowCoordinateX1(x, y);
+export function calculateY1(x: number, y: number) {
+  const xp = calculateX1(x, y);
   return y + (xp - (xp % 2)) / 2;
 }
 
-export function calculateDiagonalRowCoordinateX2(x: number, y: number) {
+export function calculateX2(x: number, y: number) {
   const yp = y + 1;
   return x + (yp - (yp % 2)) / 2;
 }
 
-export function calculateDiagonalRowCoordinateY2(x: number, y: number) {
-  const xp = calculateDiagonalRowCoordinateX2(x, y);
+export function calculateY2(x: number, y: number) {
+  const xp = calculateX2(x, y);
   return y - (xp - (xp % 2)) / 2;
 }
 
@@ -218,4 +218,22 @@ const colors = ['blue', 'red', 'green'];
 
 export function pickRandomColour() {
   return colors[Math.floor(Math.random() * 3)];
+}
+
+export function reverseY1(x: number, y: number) {
+  return y - (x - (x % 2)) / 2;
+}
+
+export function reverseX1(x: number, y: number) {
+  const yp = reverseY2(x, y);
+  return x + (yp - (yp % 2)) / 2;
+}
+
+export function reverseY2(x: number, y: number) {
+  return y + (x - (x % 2)) / 2;
+}
+
+export function reverseX2(x: number, y: number) {
+  const yp = reverseY2(x, y) + 1;
+  return x - (yp - (yp % 2)) / 2;
 }

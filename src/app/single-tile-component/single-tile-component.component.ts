@@ -13,10 +13,10 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  calculateDiagonalRowCoordinateX1,
-  calculateDiagonalRowCoordinateX2,
-  calculateDiagonalRowCoordinateY1,
-  calculateDiagonalRowCoordinateY2,
+  calculateX1,
+  calculateX2,
+  calculateY1,
+  calculateY2,
   diameter2,
   getPointFromDegrees,
   hexPoints,
@@ -78,8 +78,8 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square2Locations() {
-    const x = calculateDiagonalRowCoordinateX1(this.point.x, this.point.y);
-    const y = calculateDiagonalRowCoordinateY1(this.point.x, this.point.y);
+    const x = calculateX1(this.point.x, this.point.y);
+    const y = calculateY1(this.point.x, this.point.y);
 
     const translate1 = getPointFromDegrees(diameter2 * 2, 60);
     const translate2 = getPointFromDegrees(diameter2 * 2, -30);
@@ -90,8 +90,8 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square3Locations() {
-    const x = calculateDiagonalRowCoordinateX2(this.point.x, this.point.y);
-    const y = calculateDiagonalRowCoordinateY2(this.point.x, this.point.y);
+    const x = calculateX2(this.point.x, this.point.y);
+    const y = calculateY2(this.point.x, this.point.y);
 
     const translate1 = getPointFromDegrees(diameter2 * 2, 120);
     const translate2 = getPointFromDegrees(diameter2 * 2, 30);
