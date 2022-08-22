@@ -1,4 +1,9 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from '../app.component';
+import { SingleTileComponentComponent } from '../single-tile-component/single-tile-component.component';
 
 import { TilesComponentComponent } from './tiles-component.component';
 
@@ -8,9 +13,9 @@ describe('TilesComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TilesComponentComponent ]
-    })
-    .compileComponents();
+      declarations: [TilesComponentComponent, SingleTileComponentComponent],
+      imports: [BrowserModule, BrowserAnimationsModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
