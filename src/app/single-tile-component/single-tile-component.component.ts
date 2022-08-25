@@ -190,22 +190,22 @@ export class SingleTileComponentComponent implements OnInit {
 
   moveCoordinate(key: string, point: IPoint) {
     if (key == 'y') {
-      if (this.y == this.selectedPoint.y) {
+      if (point.y == this.selectedPoint.y) {
         point.x++;
       }
     }
     if (key == 'h') {
-      if (this.y == this.selectedPoint.y) {
+      if (point.y == this.selectedPoint.y) {
         point.x--;
       }
     }
     if (key == 'g') {
-      if (this.x == this.selectedPoint.x) {
+      if (point.x == this.selectedPoint.x) {
         point.y--;
       }
     }
     if (key == 'j') {
-      if (this.x == this.selectedPoint.x) {
+      if (point.x == this.selectedPoint.x) {
         point.y++;
       }
     }
