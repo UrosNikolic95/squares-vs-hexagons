@@ -196,21 +196,21 @@ export function calcualteCategory2(x: number, y: number) {
   return calcualteCategory1(x, y + 1);
 }
 
-export function calculateX1(x: number, y: number) {
+export function calculateX2(x: number, y: number) {
   return x - (y - (y % 2)) / 2;
 }
-export function calculateY1(x: number, y: number) {
-  const xp = calculateX1(x, y);
+export function calculateY2(x: number, y: number) {
+  const xp = calculateX2(x, y);
   return y + (xp - (xp % 2)) / 2;
 }
 
-export function calculateX2(x: number, y: number) {
+export function calculateX3(x: number, y: number) {
   const yp = y + 1;
   return x + (yp - (yp % 2)) / 2;
 }
 
-export function calculateY2(x: number, y: number) {
-  const xp = calculateX2(x, y);
+export function calculateY3(x: number, y: number) {
+  const xp = calculateX3(x, y);
   return y - (xp - (xp % 2)) / 2;
 }
 
@@ -220,20 +220,48 @@ export function pickRandomColour() {
   return colors[Math.floor(Math.random() * 3)];
 }
 
-export function reverseY1(x: number, y: number) {
+export function reverseY2(x: number, y: number) {
   return y - (x - (x % 2)) / 2;
 }
 
-export function reverseX1(x: number, y: number) {
+export function reverseX2(x: number, y: number) {
   const yp = reverseY2(x, y);
   return x + (yp - (yp % 2)) / 2;
 }
 
-export function reverseY2(x: number, y: number) {
+export function reverseY3(x: number, y: number) {
   return y + (x - (x % 2)) / 2;
 }
 
-export function reverseX2(x: number, y: number) {
-  const yp = reverseY2(x, y) + 1;
+export function reverseX3(x: number, y: number) {
+  const yp = reverseY3(x, y) + 1;
   return x - (yp - (yp % 2)) / 2;
+}
+
+export function calculatePoint2(point: IPoint): IPoint {
+  return {
+    x: calculateX2(point.x, point.y),
+    y: calculateY2(point.x, point.y),
+  };
+}
+
+export function reversePoint2(point: IPoint): IPoint {
+  return {
+    x: reverseX2(point.x, point.y),
+    y: reverseY2(point.x, point.y),
+  };
+}
+
+export function calculatePoint3(point: IPoint): IPoint {
+  return {
+    x: calculateX3(point.x, point.y),
+    y: calculateY3(point.x, point.y),
+  };
+}
+
+export function reversePoint3(point: IPoint): IPoint {
+  return {
+    x: reverseX3(point.x, point.y),
+    y: reverseY3(point.x, point.y),
+  };
 }

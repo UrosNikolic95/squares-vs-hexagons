@@ -1,8 +1,8 @@
 import {
-  calculateX1,
   calculateX2,
-  calculateY1,
+  calculateX3,
   calculateY2,
+  calculateY3,
   IPoint,
   reverseX2,
   reverseY2,
@@ -18,8 +18,8 @@ function reverseX1(x: number, y: number) {
 }
 
 export function test1(x: number, y: number) {
-  const xp1 = calculateX1(x, y);
-  const yp1 = calculateY1(x, y);
+  const xp1 = calculateX2(x, y);
+  const yp1 = calculateY2(x, y);
   const xp2 = reverseX1(xp1, yp1);
   const yp2 = reverseY1(xp1, yp1);
   return {
@@ -29,8 +29,8 @@ export function test1(x: number, y: number) {
 }
 
 export function test2(x: number, y: number) {
-  const xp1 = calculateX2(x, y);
-  const yp1 = calculateY2(x, y);
+  const xp1 = calculateX3(x, y);
+  const yp1 = calculateY3(x, y);
   const xp2 = reverseX2(xp1, yp1);
   const yp2 = reverseY2(xp1, yp1);
   return {

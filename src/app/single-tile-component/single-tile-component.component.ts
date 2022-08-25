@@ -13,14 +13,15 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  calculateX1,
-  calculateX2,
-  calculateY1,
-  calculateY2,
+  calculatePoint2,
+  calculatePoint3,
   diameter2,
   getPointFromDegrees,
   hexPoints,
+  IPoint,
   pickRandomColour,
+  reversePoint2,
+  reversePoint3,
   squareHeigth,
   squareWigth,
   State,
@@ -61,8 +62,7 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   hexLocations() {
-    const x = this.point.x;
-    const y = this.point.y;
+    const { x, y } = this.point;
 
     const shift = y % 2 == 0 ? 0 : squareWigth / 2;
     this.x = x * squareWigth + shift;
@@ -70,16 +70,14 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square1Locations() {
-    const x = this.point.x;
-    const y = this.point.y;
+    const { x, y } = this.point;
 
     this.x = x * squareWigth;
     this.y = y * squareWigth;
   }
 
   square2Locations() {
-    const x = calculateX1(this.point.x, this.point.y);
-    const y = calculateY1(this.point.x, this.point.y);
+    const { x, y } = calculatePoint2(this.point);
 
     const translate1 = getPointFromDegrees(diameter2 * 2, 60);
     const translate2 = getPointFromDegrees(diameter2 * 2, -30);
@@ -90,8 +88,7 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   square3Locations() {
-    const x = calculateX2(this.point.x, this.point.y);
-    const y = calculateY2(this.point.x, this.point.y);
+    const { x, y } = calculatePoint3(this.point);
 
     const translate1 = getPointFromDegrees(diameter2 * 2, 120);
     const translate2 = getPointFromDegrees(diameter2 * 2, 30);
@@ -137,6 +134,7 @@ export class SingleTileComponentComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
+    this.moveLine(event.key);
     this.hexTransition(event.key);
 
     this.shape = {
@@ -175,6 +173,67 @@ export class SingleTileComponentComponent implements OnInit {
       this.currentState = State.hex;
       this.hexLocations();
       return;
+    }
+  }
+
+  moveLine(key: string) {
+    const point1 = this.calculatePoint(this.point);
+
+    if (point1) {
+      this.moveCoordinate(key, point1);
+      const point2 = this.reversePoint(point1);
+      if (point2) {
+        this.point = point2;
+      }
+    }
+  }
+
+  moveCoordinate(key: string, point: IPoint) {
+    if (key == 'y') {
+      if (this.y == this.selectedPoint.y) {
+        point.x++;
+      }
+    }
+    if (key == 'h') {
+      if (this.y == this.selectedPoint.y) {
+        point.x--;
+      }
+    }
+    if (key == 'g') {
+      if (this.x == this.selectedPoint.x) {
+        point.y--;
+      }
+    }
+    if (key == 'j') {
+      if (this.x == this.selectedPoint.x) {
+        point.y++;
+      }
+    }
+  }
+
+  calculatePoint(point: IPoint): IPoint | null {
+    switch (this.currentState) {
+      case State.square1:
+        return { ...point };
+      case State.square2:
+        return calculatePoint2(point);
+      case State.square3:
+        return calculatePoint3(point);
+      default:
+        return null;
+    }
+  }
+
+  reversePoint(point: IPoint): IPoint | null {
+    switch (this.currentState) {
+      case State.square1:
+        return { ...point };
+      case State.square2:
+        return reversePoint2(point);
+      case State.square3:
+        return reversePoint3(point);
+      default:
+        return null;
     }
   }
 
