@@ -136,6 +136,7 @@ export class SingleTileComponentComponent implements OnInit {
   keydown(element: Element, event: KeyboardEvent) {
     this.moveLine(event.key);
     this.hexTransition(event.key);
+    this.calculateLocation();
 
     this.shape = {
       value: Date.now(),
@@ -156,23 +157,34 @@ export class SingleTileComponentComponent implements OnInit {
   hexTransition(key: string) {
     if (key == '1' && this.currentState == State.hex) {
       this.currentState = State.square1;
-      this.square1Locations();
       return;
     }
     if (key == '2' && this.currentState == State.hex) {
       this.currentState = State.square2;
-      this.square2Locations();
       return;
     }
     if (key == '3' && this.currentState == State.hex) {
       this.currentState = State.square3;
-      this.square3Locations();
       return;
     }
     if (this.currentState != State.hex && ['1', '2', '3'].includes(key)) {
       this.currentState = State.hex;
-      this.hexLocations();
       return;
+    }
+  }
+
+  calculateLocation() {
+    switch (this.currentState) {
+      case State.square1:
+        return this.square1Locations();
+      case State.square2:
+        return this.square2Locations();
+      case State.square3:
+        return this.square3Locations();
+      case State.hex:
+        return this.hexLocations();
+      default:
+        return null;
     }
   }
 
