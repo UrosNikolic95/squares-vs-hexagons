@@ -265,3 +265,29 @@ export function reversePoint3(point: IPoint): IPoint {
     y: reverseY3(point.x, point.y),
   };
 }
+
+export function calculatePoint(point: IPoint, state: State): IPoint | null {
+  switch (state) {
+    case State.square1:
+      return { ...point };
+    case State.square2:
+      return calculatePoint2(point);
+    case State.square3:
+      return calculatePoint3(point);
+    default:
+      return null;
+  }
+}
+
+export function reversePoint(point: IPoint, state: State): IPoint | null {
+  switch (state) {
+    case State.square1:
+      return { ...point };
+    case State.square2:
+      return reversePoint2(point);
+    case State.square3:
+      return reversePoint3(point);
+    default:
+      return null;
+  }
+}

@@ -13,6 +13,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  calculatePoint,
   calculatePoint2,
   calculatePoint3,
   diameter2,
@@ -20,6 +21,7 @@ import {
   hexPoints,
   IPoint,
   pickRandomColour,
+  reversePoint,
   reversePoint2,
   reversePoint3,
   squareHeigth,
@@ -189,11 +191,11 @@ export class SingleTileComponentComponent implements OnInit {
   }
 
   moveLine(key: string) {
-    const point1 = this.calculatePoint(this.point);
+    const point1 = calculatePoint(this.point, this.currentState);
 
     if (point1) {
       this.moveCoordinate(key, point1);
-      const point2 = this.reversePoint(point1);
+      const point2 = reversePoint(point1, this.currentState);
       if (point2) {
         this.point = point2;
       }
@@ -220,32 +222,6 @@ export class SingleTileComponentComponent implements OnInit {
       if (point.x == this.selectedPoint.x) {
         point.y++;
       }
-    }
-  }
-
-  calculatePoint(point: IPoint): IPoint | null {
-    switch (this.currentState) {
-      case State.square1:
-        return { ...point };
-      case State.square2:
-        return calculatePoint2(point);
-      case State.square3:
-        return calculatePoint3(point);
-      default:
-        return null;
-    }
-  }
-
-  reversePoint(point: IPoint): IPoint | null {
-    switch (this.currentState) {
-      case State.square1:
-        return { ...point };
-      case State.square2:
-        return reversePoint2(point);
-      case State.square3:
-        return reversePoint3(point);
-      default:
-        return null;
     }
   }
 
