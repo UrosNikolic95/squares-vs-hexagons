@@ -19,6 +19,7 @@ import {
   diameter2,
   getPointFromDegrees,
   hexPoints,
+  hexTransition,
   IPoint,
   pickRandomColour,
   reversePoint,
@@ -113,6 +114,7 @@ export class SingleTileComponentComponent implements OnInit {
   @HostBinding('style.top.px')
   y?: number;
 
+  @Input()
   currentState = State.hex;
 
   @HostBinding('style.clip-path')
@@ -137,7 +139,6 @@ export class SingleTileComponentComponent implements OnInit {
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
     this.moveLine(event.key);
-    this.hexTransition(event.key);
     this.calculateLocation();
 
     this.shape = {
@@ -156,25 +157,6 @@ export class SingleTileComponentComponent implements OnInit {
     this.setOpacity();
   }
 
-  hexTransition(key: string) {
-    if (key == '1' && this.currentState == State.hex) {
-      this.currentState = State.square1;
-      return;
-    }
-    if (key == '2' && this.currentState == State.hex) {
-      this.currentState = State.square2;
-      return;
-    }
-    if (key == '3' && this.currentState == State.hex) {
-      this.currentState = State.square3;
-      return;
-    }
-    if (this.currentState != State.hex && ['1', '2', '3'].includes(key)) {
-      this.currentState = State.hex;
-      return;
-    }
-  }
-
   calculateLocation() {
     switch (this.currentState) {
       case State.square1:
@@ -186,7 +168,7 @@ export class SingleTileComponentComponent implements OnInit {
       case State.hex:
         return this.hexLocations();
       default:
-        return null;
+        return;
     }
   }
 
@@ -204,23 +186,23 @@ export class SingleTileComponentComponent implements OnInit {
 
   moveCoordinate(key: string, point: IPoint) {
     if (key == 'y') {
-      if (point.y == this.selectedPoint.y) {
-        point.x++;
-      }
-    }
-    if (key == 'h') {
-      if (point.y == this.selectedPoint.y) {
-        point.x--;
-      }
-    }
-    if (key == 'g') {
       if (point.x == this.selectedPoint.x) {
         point.y--;
       }
     }
-    if (key == 'j') {
+    if (key == 'h') {
       if (point.x == this.selectedPoint.x) {
         point.y++;
+      }
+    }
+    if (key == 'g') {
+      if (point.y == this.selectedPoint.y) {
+        point.x--;
+      }
+    }
+    if (key == 'j') {
+      if (point.y == this.selectedPoint.y) {
+        point.x++;
       }
     }
   }

@@ -291,3 +291,19 @@ export function reversePoint(point: IPoint, state: State): IPoint | null {
       return null;
   }
 }
+
+export function hexTransition(key: string, currentState: State) {
+  if (key == '1' && currentState == State.hex) {
+    return State.square1;
+  }
+  if (key == '2' && currentState == State.hex) {
+    return State.square2;
+  }
+  if (key == '3' && currentState == State.hex) {
+    return State.square3;
+  }
+  if (currentState != State.hex && ['1', '2', '3'].includes(key)) {
+    return State.hex;
+  }
+  return currentState;
+}

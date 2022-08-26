@@ -1,5 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { generateField } from '../helpers/tile.helper';
+import {
+  calculatePoint,
+  generateField,
+  hexTransition,
+  State,
+} from '../helpers/tile.helper';
 
 @Component({
   selector: 'app-tiles-component',
@@ -13,9 +18,13 @@ export class TilesComponentComponent implements OnInit {
 
   field = generateField(12);
 
+  currentState = State.hex;
+
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
     const { key } = event;
+    const point = calculatePoint(this.selectedPoint, this.currentState);
+    this.currentState = hexTransition(key, this.currentState);
     if (key == 'w') {
       this.selectedPoint.y--;
     }

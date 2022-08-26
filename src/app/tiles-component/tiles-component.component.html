@@ -3,6 +3,7 @@
     *ngFor="let point of field"
     [point]="point"
     [selectedPoint]="selectedPoint"
+    [currentState]="currentState"
   ></app-single-tile-component>
 </div>
 <p>{{ selectedPoint.x }},{{ selectedPoint.y }}</p>
