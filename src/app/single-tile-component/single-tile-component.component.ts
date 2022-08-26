@@ -167,41 +167,35 @@ export class SingleTileComponentComponent implements OnInit {
         return this.square3Locations();
       case State.hex:
         return this.hexLocations();
-      default:
-        return;
     }
   }
 
   moveLine(key: string) {
     const point1 = calculatePoint(this.point, this.currentState);
-
-    if (point1) {
-      this.moveCoordinate(key, point1);
-      const point2 = reversePoint(point1, this.currentState);
-      if (point2) {
-        this.point = point2;
-      }
-    }
+    this.moveCoordinate(key, point1);
+    const point2 = reversePoint(point1, this.currentState);
+    this.point = point2;
   }
 
   moveCoordinate(key: string, point: IPoint) {
+    const selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'y') {
-      if (point.x == this.selectedPoint.x) {
+      if (point.x == selectedPoint.x) {
         point.y--;
       }
     }
     if (key == 'h') {
-      if (point.x == this.selectedPoint.x) {
+      if (point.x == selectedPoint.x) {
         point.y++;
       }
     }
     if (key == 'g') {
-      if (point.y == this.selectedPoint.y) {
+      if (point.y == selectedPoint.y) {
         point.x--;
       }
     }
     if (key == 'j') {
-      if (point.y == this.selectedPoint.y) {
+      if (point.y == selectedPoint.y) {
         point.x++;
       }
     }

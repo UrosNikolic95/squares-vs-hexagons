@@ -3,6 +3,7 @@ import {
   calculatePoint,
   generateField,
   hexTransition,
+  reversePoint,
   State,
 } from '../helpers/tile.helper';
 
@@ -23,8 +24,8 @@ export class TilesComponentComponent implements OnInit {
   @HostListener('document:keyup', ['$event.target', '$event'])
   keydown(element: Element, event: KeyboardEvent) {
     const { key } = event;
-    const point = calculatePoint(this.selectedPoint, this.currentState);
     this.currentState = hexTransition(key, this.currentState);
+    this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'w') {
       this.selectedPoint.y--;
     }
@@ -37,7 +38,7 @@ export class TilesComponentComponent implements OnInit {
     if (key == 'd') {
       this.selectedPoint.x++;
     }
-    console.log(this.selectedPoint);
+    this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
   }
 
   selectedPoint = {

@@ -266,29 +266,29 @@ export function reversePoint3(point: IPoint): IPoint {
   };
 }
 
-export function calculatePoint(point: IPoint, state: State): IPoint | null {
+export function calculatePoint(point: IPoint, state: State): IPoint {
   switch (state) {
     case State.square1:
-      return { ...point };
+      return point;
     case State.square2:
       return calculatePoint2(point);
     case State.square3:
       return calculatePoint3(point);
     default:
-      return null;
+      return point;
   }
 }
 
-export function reversePoint(point: IPoint, state: State): IPoint | null {
+export function reversePoint(point: IPoint, state: State): IPoint {
   switch (state) {
     case State.square1:
-      return { ...point };
+      return point;
     case State.square2:
       return reversePoint2(point);
     case State.square3:
       return reversePoint3(point);
     default:
-      return null;
+      return point;
   }
 }
 
