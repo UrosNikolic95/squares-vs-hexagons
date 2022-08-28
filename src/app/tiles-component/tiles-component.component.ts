@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Event } from '@angular/router';
 import {
   calculatePoint,
   generateField,
@@ -21,8 +22,67 @@ export class TilesComponentComponent implements OnInit {
 
   currentState = State.hex;
 
-  @HostListener('document:keyup', ['$event.target', '$event'])
-  keydown(element: Element, event: KeyboardEvent) {
+  @HostBinding('style.left.px')
+  x = 0;
+  @HostBinding('style.top.px')
+  y = 0;
+
+  panning = false;
+
+  startingPanningPoint = {
+    x: 0,
+    y: 0,
+  };
+
+  startingPosition = {
+    x: 0,
+    y: 0,
+  };
+
+  @HostListener('contextmenu', ['$event'])
+  contextMenu(event: MouseEvent) {
+    event.preventDefault();
+  }
+
+  @HostListener('mousedown', ['$event'])
+  mouseDown(event: MouseEvent) {
+    console.log('mouseDown');
+    if (event.button == 0) {
+      this.panning = true;
+      this.startingPanningPoint = {
+        x: event.x,
+        y: event.y,
+      };
+      this.startingPosition = {
+        x: this.x,
+        y: this.y,
+      };
+    }
+    event.preventDefault();
+  }
+
+  @HostListener('mouseup', ['$event'])
+  mouseUp(event: MouseEvent) {
+    console.log('mouseUp');
+    this.panning = false;
+  }
+
+  @HostListener('mousemove', ['$event'])
+  mouseMove(event: MouseEvent) {
+    console.log(
+      this.x,
+      event.x,
+      this.startingPanningPoint.x,
+      event.x - this.startingPanningPoint.x
+    );
+    if (this.panning) {
+      this.x = this.startingPosition.x + event.x - this.startingPanningPoint.x;
+      this.y = this.startingPosition.y + event.y - this.startingPanningPoint.y;
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  keydown(event: KeyboardEvent) {
     const { key } = event;
     this.currentState = hexTransition(key, this.currentState);
     this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
