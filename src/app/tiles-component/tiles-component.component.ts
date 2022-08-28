@@ -46,7 +46,6 @@ export class TilesComponentComponent implements OnInit {
 
   @HostListener('mousedown', ['$event'])
   mouseDown(event: MouseEvent) {
-    console.log('mouseDown');
     if (event.button == 0) {
       this.panning = true;
       this.startingPanningPoint = {
@@ -63,18 +62,11 @@ export class TilesComponentComponent implements OnInit {
 
   @HostListener('mouseup', ['$event'])
   mouseUp(event: MouseEvent) {
-    console.log('mouseUp');
     this.panning = false;
   }
 
   @HostListener('mousemove', ['$event'])
   mouseMove(event: MouseEvent) {
-    console.log(
-      this.x,
-      event.x,
-      this.startingPanningPoint.x,
-      event.x - this.startingPanningPoint.x
-    );
     if (this.panning) {
       this.x = this.startingPosition.x + event.x - this.startingPanningPoint.x;
       this.y = this.startingPosition.y + event.y - this.startingPanningPoint.y;
