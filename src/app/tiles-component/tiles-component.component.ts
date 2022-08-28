@@ -26,18 +26,19 @@ export class TilesComponentComponent implements OnInit {
     const { key } = event;
     this.currentState = hexTransition(key, this.currentState);
     this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
-    if (key == 'w') {
+    if (key == 'w' || key == 'y') {
       this.selectedPoint.y--;
     }
-    if (key == 's') {
+    if (key == 's' || key == 'h') {
       this.selectedPoint.y++;
     }
-    if (key == 'a') {
+    if (key == 'a' || key == 'g') {
       this.selectedPoint.x--;
     }
-    if (key == 'd') {
+    if (key == 'd' || key == 'j') {
       this.selectedPoint.x++;
     }
+
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
   }
 
