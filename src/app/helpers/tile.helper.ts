@@ -1,3 +1,5 @@
+import { SingleTileComponentComponent } from '../single-tile-component/single-tile-component.component';
+
 const radiansInCircle = 2 * Math.PI;
 const degreesInCircle = 360;
 const degreesPerRadian = degreesInCircle / radiansInCircle;
@@ -306,4 +308,9 @@ export function hexTransition(key: string, currentState: State) {
     return State.hex;
   }
   return currentState;
+}
+
+export const adjancy = {} as { [key: string]: SingleTileComponentComponent[] };
+export function pointToString(point: IPoint) {
+  return point.x + ',' + point.y;
 }

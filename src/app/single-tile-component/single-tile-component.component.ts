@@ -13,18 +13,17 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  adjancy,
   calculatePoint,
   calculatePoint2,
   calculatePoint3,
   diameter2,
   getPointFromDegrees,
   hexPoints,
-  hexTransition,
   IPoint,
   pickRandomColour,
+  pointToString,
   reversePoint,
-  reversePoint2,
-  reversePoint3,
   squareHeigth,
   squareWigth,
   State,
@@ -39,7 +38,7 @@ import {
     trigger('shape', [
       transition('* => *', [
         animate(
-          '0.5s',
+          '0.4s',
           keyframes([
             style({
               'clip-path': '{{ p1 }}',
@@ -101,8 +100,20 @@ export class SingleTileComponentComponent implements OnInit {
     }
   }
 
+  gridPoint = { x: 0, y: 0 };
+
   @Input()
-  point = { x: 0, y: 0 };
+  set point(val: IPoint) {
+    this.positionRegistration(
+      pointToString(this.gridPoint),
+      pointToString(val)
+    );
+    this.gridPoint = val;
+  }
+
+  get point() {
+    return this.gridPoint;
+  }
 
   @HostBinding('style.height.px')
   height = squareHeigth + 1000;
@@ -136,8 +147,8 @@ export class SingleTileComponentComponent implements OnInit {
   @HostBinding('style.background-color')
   color = pickRandomColour();
 
-  @HostListener('document:keyup', ['$event.target', '$event'])
-  keydown(element: Element, event: KeyboardEvent) {
+  @HostListener('document:keyup', ['$event'])
+  keydown(event: KeyboardEvent) {
     this.moveLine(event.key);
     this.calculateLocation();
 
@@ -199,6 +210,15 @@ export class SingleTileComponentComponent implements OnInit {
         point.x++;
       }
     }
+  }
+
+  positionRegistration(previous: string, next: string) {
+    if (adjancy[previous])
+      adjancy[previous] = adjancy[previous].filter((el) => el != this);
+
+    if (!adjancy[next]) adjancy[next] = [];
+
+    adjancy[next].push(this);
   }
 
   setOpacity() {

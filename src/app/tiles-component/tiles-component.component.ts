@@ -18,7 +18,7 @@ export class TilesComponentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  field = generateField(12);
+  field = generateField(24);
 
   currentState = State.hex;
 
@@ -90,7 +90,6 @@ export class TilesComponentComponent implements OnInit {
     if (key == 'd' || key == 'j') {
       this.selectedPoint.x++;
     }
-
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
   }
 
