@@ -57,10 +57,7 @@ import {
   ],
 })
 export class SingleTileComponentComponent implements OnInit {
-  static all: SingleTileComponentComponent[] = [];
-  constructor() {
-    SingleTileComponentComponent.all.push(this);
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.hexLocations();
@@ -79,6 +76,11 @@ export class SingleTileComponentComponent implements OnInit {
 
     this.x = x * squareWigth;
     this.y = y * squareWigth;
+  }
+
+  @Input()
+  set tiles(val: SingleTileComponentComponent[]) {
+    val.push(this);
   }
 
   square2Locations() {
@@ -103,18 +105,8 @@ export class SingleTileComponentComponent implements OnInit {
     }
   }
 
-  gridPoint = { x: 0, y: 0 };
-
   @Input()
-  set point(val: IPoint) {
-    this.key1 = pointToString(calculatePoint(val, this.currentState));
-
-    this.gridPoint = val;
-  }
-
-  get point() {
-    return this.gridPoint;
-  }
+  point = { x: 0, y: 0 };
 
   @HostBinding('style.height.px')
   height = squareHeigth + 1000;
@@ -193,17 +185,22 @@ export class SingleTileComponentComponent implements OnInit {
 
   moveCoordinate(key: string, point: IPoint) {
     const selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
+    this.moved = false;
     if (key == 'y' && point.x == selectedPoint.x) {
       point.y--;
+      this.moved = true;
     }
     if (key == 'h' && point.x == selectedPoint.x) {
       point.y++;
+      this.moved = true;
     }
     if (key == 'g' && point.y == selectedPoint.y) {
       point.x--;
+      this.moved = true;
     }
     if (key == 'j' && point.y == selectedPoint.y) {
       point.x++;
+      this.moved = true;
     }
   }
 

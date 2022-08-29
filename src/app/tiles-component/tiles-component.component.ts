@@ -93,12 +93,15 @@ export class TilesComponentComponent implements OnInit {
       this.selectedPoint.x++;
     }
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
+    console.log(this.tiles.length);
     this.positionRegistration();
   }
 
+  tiles: SingleTileComponentComponent[] = [];
+
   positionRegistration() {
     Object.keys(adjancy).forEach((key) => delete adjancy[key]);
-    SingleTileComponentComponent.all.forEach((tile) => {
+    this.tiles.forEach((tile) => {
       adjancy[pointToString(calculatePoint(tile.point, this.currentState))] =
         tile;
     });
