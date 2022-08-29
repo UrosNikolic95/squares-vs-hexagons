@@ -189,29 +189,21 @@ export class SingleTileComponentComponent implements OnInit {
     this.point = point2;
   }
 
-  key1: string = '';
+  moved = false;
 
   moveCoordinate(key: string, point: IPoint) {
     const selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
-    if (key == 'y') {
-      if (point.x == selectedPoint.x) {
-        point.y--;
-      }
+    if (key == 'y' && point.x == selectedPoint.x) {
+      point.y--;
     }
-    if (key == 'h') {
-      if (point.x == selectedPoint.x) {
-        point.y++;
-      }
+    if (key == 'h' && point.x == selectedPoint.x) {
+      point.y++;
     }
-    if (key == 'g') {
-      if (point.y == selectedPoint.y) {
-        point.x--;
-      }
+    if (key == 'g' && point.y == selectedPoint.y) {
+      point.x--;
     }
-    if (key == 'j') {
-      if (point.y == selectedPoint.y) {
-        point.x++;
-      }
+    if (key == 'j' && point.y == selectedPoint.y) {
+      point.x++;
     }
   }
 
