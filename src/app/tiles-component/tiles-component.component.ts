@@ -1,12 +1,14 @@
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
-import { Event } from '@angular/router';
 import {
+  adjancy,
   calculatePoint,
   generateField,
   hexTransition,
+  pointToString,
   reversePoint,
   State,
 } from '../helpers/tile.helper';
+import { SingleTileComponentComponent } from '../single-tile-component/single-tile-component.component';
 
 @Component({
   selector: 'app-tiles-component',
@@ -18,7 +20,7 @@ export class TilesComponentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  field = generateField(24);
+  field = generateField(12);
 
   currentState = State.hex;
 
@@ -91,6 +93,15 @@ export class TilesComponentComponent implements OnInit {
       this.selectedPoint.x++;
     }
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
+    this.positionRegistration();
+  }
+
+  positionRegistration() {
+    Object.keys(adjancy).forEach((key) => delete adjancy[key]);
+    SingleTileComponentComponent.all.forEach((tile) => {
+      adjancy[pointToString(calculatePoint(tile.point, this.currentState))] =
+        tile;
+    });
   }
 
   selectedPoint = {

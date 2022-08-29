@@ -38,7 +38,7 @@ import {
     trigger('shape', [
       transition('* => *', [
         animate(
-          '0.4s',
+          '0.5s',
           keyframes([
             style({
               'clip-path': '{{ p1 }}',
@@ -57,7 +57,10 @@ import {
   ],
 })
 export class SingleTileComponentComponent implements OnInit {
-  constructor() {}
+  static all: SingleTileComponentComponent[] = [];
+  constructor() {
+    SingleTileComponentComponent.all.push(this);
+  }
 
   ngOnInit(): void {
     this.hexLocations();
@@ -104,10 +107,8 @@ export class SingleTileComponentComponent implements OnInit {
 
   @Input()
   set point(val: IPoint) {
-    this.positionRegistration(
-      pointToString(this.gridPoint),
-      pointToString(val)
-    );
+    this.key1 = pointToString(calculatePoint(val, this.currentState));
+
     this.gridPoint = val;
   }
 
@@ -188,6 +189,8 @@ export class SingleTileComponentComponent implements OnInit {
     this.point = point2;
   }
 
+  key1: string = '';
+
   moveCoordinate(key: string, point: IPoint) {
     const selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'y') {
@@ -210,15 +213,6 @@ export class SingleTileComponentComponent implements OnInit {
         point.x++;
       }
     }
-  }
-
-  positionRegistration(previous: string, next: string) {
-    if (adjancy[previous])
-      adjancy[previous] = adjancy[previous].filter((el) => el != this);
-
-    if (!adjancy[next]) adjancy[next] = [];
-
-    adjancy[next].push(this);
   }
 
   setOpacity() {

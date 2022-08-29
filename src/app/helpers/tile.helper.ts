@@ -310,7 +310,7 @@ export function hexTransition(key: string, currentState: State) {
   return currentState;
 }
 
-export const adjancy = {} as { [key: string]: SingleTileComponentComponent[] };
+export const adjancy = {} as { [key: string]: SingleTileComponentComponent };
 export function pointToString(point: IPoint) {
   return point.x + ',' + point.y;
 }
