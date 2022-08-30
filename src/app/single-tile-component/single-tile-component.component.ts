@@ -139,7 +139,7 @@ export class SingleTileComponentComponent implements OnInit {
   color = pickRandomColour();
 
   @HostListener('document:keyup', ['$event'])
-  keydown(event: KeyboardEvent) {
+  keyup(event: KeyboardEvent) {
     this.moveLine(event.key);
     this.calculateLocation();
 
@@ -182,6 +182,7 @@ export class SingleTileComponentComponent implements OnInit {
   moved = false;
 
   moveCoordinate(key: string, point: IPoint) {
+    console.log('moveCoordinate');
     const selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     this.moved = false;
     if (key == 'y' && point.x == selectedPoint.x) {
