@@ -100,14 +100,14 @@ export class TilesComponentComponent implements OnInit {
     this.movedRegistration();
     if (this.moved.length) {
       setTimeout(() => {
-        const group = this.takeGroup();
-        console.log('?', group, this.moved);
-        console.log('group', group.length);
-        group.forEach((el) => {
+        // const group = this.takeGroup();
+        // console.log('?', group, this.moved);
+        // console.log('group', group.length);
+        this.moved.forEach((el) => {
           const oldColor = el.color;
           el.color = 'yellow';
           setTimeout(() => (el.color = oldColor), 500);
-        }, 500);
+        }, 0);
       });
     }
   }
