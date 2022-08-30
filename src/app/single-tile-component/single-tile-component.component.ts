@@ -13,7 +13,6 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  adjancy,
   calculatePoint,
   calculatePoint2,
   calculatePoint3,
@@ -22,7 +21,6 @@ import {
   hexPoints,
   IPoint,
   pickRandomColour,
-  pointToString,
   reversePoint,
   squareHeigth,
   squareWigth,
