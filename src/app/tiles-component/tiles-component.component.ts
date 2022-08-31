@@ -5,9 +5,9 @@ import {
   generateField,
   hexTransition,
   IPoint,
-  pickRandomColour,
   pointToString,
   reversePoint,
+  sleep,
   State,
 } from '../helpers/tile.helper';
 import { SingleTileComponentComponent } from '../single-tile-component/single-tile-component.component';
@@ -78,9 +78,10 @@ export class TilesComponentComponent implements OnInit {
   }
 
   @HostListener('document:keyup', ['$event'])
-  keyup(event: KeyboardEvent) {
+  async keyup(event: KeyboardEvent) {
     const { key } = event;
     this.currentState = hexTransition(key, this.currentState);
+
     this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'w' || key == 'y') {
       this.selectedPoint.y--;
@@ -95,23 +96,24 @@ export class TilesComponentComponent implements OnInit {
       this.selectedPoint.x++;
     }
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
-
+    this.tiles.forEach((el) =>
+      el.keyup(event, this.currentState, this.selectedPoint)
+    );
     this.positionRegistration();
-    setTimeout(() => {
-      this.movedRegistration();
-      if (this.moved.length) {
-        setTimeout(() => {
-          // const group = this.takeGroup();
-          // console.log('?', group, this.moved);
-          // console.log('group', group.length);
-          this.moved.forEach((el) => {
-            const oldColor = el.color;
-            el.color = 'yellow';
-            setTimeout(() => (el.color = oldColor), 200);
-          }, 200);
-        });
-      }
-    }, 100);
+
+    this.movedRegistration();
+    if (this.moved.length) {
+      await sleep(200);
+      // const group = this.takeGroup();
+      // console.log('?', group, this.moved);
+      // console.log('group', group.length);
+      this.moved.forEach(async (el) => {
+        const oldColor = el.color;
+        el.color = 'yellow';
+        await sleep(200);
+        el.color = oldColor;
+      });
+    }
   }
 
   tiles: SingleTileComponentComponent[] = [];

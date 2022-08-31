@@ -138,8 +138,9 @@ export class SingleTileComponentComponent implements OnInit {
   @HostBinding('style.background-color')
   color = pickRandomColour();
 
-  @HostListener('document:keyup', ['$event'])
-  keyup(event: KeyboardEvent) {
+  keyup(event: KeyboardEvent, currentState: State, selectedPoint: IPoint) {
+    this.currentState = currentState;
+    this.selectedPoint = selectedPoint;
     this.moveLine(event.key);
     this.calculateLocation();
 
