@@ -314,3 +314,7 @@ export const adjancy = {} as { [key: string]: SingleTileComponentComponent };
 export function pointToString(point: IPoint) {
   return point.x + ',' + point.y;
 }
+
+export async function sleep(miliseconds: number) {
+  return new Promise((res) => setTimeout(res, miliseconds));
+}

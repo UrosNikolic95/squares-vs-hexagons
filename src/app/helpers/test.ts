@@ -3,7 +3,6 @@ import {
   calculateX3,
   calculateY2,
   calculateY3,
-  IPoint,
   reverseX2,
   reverseY2,
 } from './tile.helper';
