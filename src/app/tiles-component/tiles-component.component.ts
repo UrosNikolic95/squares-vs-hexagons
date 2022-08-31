@@ -81,7 +81,6 @@ export class TilesComponentComponent implements OnInit {
   async keyup(event: KeyboardEvent) {
     const { key } = event;
     this.currentState = hexTransition(key, this.currentState);
-
     this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'w' || key == 'y') {
       this.selectedPoint.y--;
@@ -96,6 +95,7 @@ export class TilesComponentComponent implements OnInit {
       this.selectedPoint.x++;
     }
     this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
+
     this.tiles.forEach((el) =>
       el.keyup(event, this.currentState, this.selectedPoint)
     );
@@ -103,16 +103,29 @@ export class TilesComponentComponent implements OnInit {
 
     this.movedRegistration();
     if (this.moved.length) {
+      console.log('moved');
       await sleep(200);
-      // const group = this.takeGroup();
-      // console.log('?', group, this.moved);
-      // console.log('group', group.length);
-      this.moved.forEach(async (el) => {
-        const oldColor = el.color;
-        el.color = 'yellow';
-        await sleep(200);
-        el.color = oldColor;
-      });
+
+      await Promise.all(
+        this.moved.map(async (el) => {
+          const oldColor = el.color;
+          el.color = 'yellow';
+          await sleep(200);
+          el.color = oldColor;
+        })
+      );
+      const startingPoint = this.pickRandomMoved();
+      if (startingPoint) {
+        const group = this.takeGroup(startingPoint);
+        await Promise.all(
+          group.map(async (el) => {
+            const oldColor = el.color;
+            el.color = 'yellow';
+            await sleep(200);
+            el.color = oldColor;
+          })
+        );
+      }
     }
   }
 
@@ -138,8 +151,8 @@ export class TilesComponentComponent implements OnInit {
     return this.moved[Math.floor(Math.random() * this.moved.length)];
   }
 
-  takeGroup() {
-    const startingPoint = this.pickRandomMoved();
+  takeGroup(startingPoint: SingleTileComponentComponent) {
+    if (!startingPoint) return startingPoint;
 
     const visited = new Set<SingleTileComponentComponent>();
     visited.add(startingPoint);
@@ -180,12 +193,14 @@ export class TilesComponentComponent implements OnInit {
         y: 0,
       },
     ];
-    return moveBy.map((moveByPoint) =>
-      this.getTileFromPosition(
-        calculatePoint(point, this.currentState),
-        moveByPoint
+    return moveBy
+      .map((moveByPoint) =>
+        this.getTileFromPosition(
+          calculatePoint(point, this.currentState),
+          moveByPoint
+        )
       )
-    );
+      .filter((el) => el);
   }
 
   getTileFromPosition(point: IPoint, moveBy: IPoint) {
