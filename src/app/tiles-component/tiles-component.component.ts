@@ -5,6 +5,7 @@ import {
   generateField,
   hexTransition,
   IPoint,
+  pickRandomColour,
   pointToString,
   reversePoint,
   sleep,
@@ -114,17 +115,23 @@ export class TilesComponentComponent implements OnInit {
           el.color = oldColor;
         })
       );
-      const startingPoint = this.pickRandomMoved();
-      if (startingPoint) {
-        const group = this.takeGroup(startingPoint);
-        await Promise.all(
-          group.map(async (el) => {
-            const oldColor = el.color;
-            el.color = 'yellow';
-            await sleep(200);
-            el.color = oldColor;
-          })
-        );
+
+      let group: SingleTileComponentComponent[] = [];
+      for (let i1 = 0; i1 < 30; i1++) {
+        console.log('group.length', group.length);
+        const points = [...this.moved, ...group];
+        const startingPoint = this.pickRandom(points);
+        if (startingPoint) {
+          group = this.takeGroup(startingPoint);
+          await Promise.all(
+            group.map(async (el) => {
+              const oldColor = el.color;
+              el.color = 'yellow';
+              await sleep(200);
+              el.color = pickRandomColour();
+            })
+          );
+        }
       }
     }
   }
@@ -143,18 +150,19 @@ export class TilesComponentComponent implements OnInit {
   }
 
   movedRegistration() {
-    console.log('movedRegistration');
     this.moved = this.tiles.filter((el) => el.moved);
   }
 
-  pickRandomMoved() {
-    return this.moved[Math.floor(Math.random() * this.moved.length)];
+  pickRandom<T>(arr: T[]) {
+    return arr[Math.floor(Math.random() * this.moved.length)];
   }
 
-  takeGroup(startingPoint: SingleTileComponentComponent) {
+  takeGroup(
+    startingPoint: SingleTileComponentComponent,
+    visited = new Set<SingleTileComponentComponent>()
+  ) {
     if (!startingPoint) return startingPoint;
 
-    const visited = new Set<SingleTileComponentComponent>();
     visited.add(startingPoint);
     const queue = [startingPoint];
     const found = [startingPoint];
@@ -162,7 +170,6 @@ export class TilesComponentComponent implements OnInit {
       const current = queue.shift();
       if (!current) break;
       const adjacentPoints = this.getAdjacent(current.point);
-      console.log(adjacentPoints);
       adjacentPoints.forEach((el) => {
         if (!visited.has(el) && el.color == startingPoint.color) {
           visited.add(el);
