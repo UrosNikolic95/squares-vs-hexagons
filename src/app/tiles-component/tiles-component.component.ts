@@ -116,11 +116,11 @@ export class TilesComponentComponent implements OnInit {
         })
       );
 
-      let group: SingleTileComponentComponent[] = [];
+      let group: SingleTileComponentComponent[] = [...this.moved];
       for (let i1 = 0; i1 < 30; i1++) {
-        console.log('group.length', group.length);
-        const points = [...this.moved, ...group];
+        const points = [...group];
         const startingPoint = this.pickRandom(points);
+        console.log('group.length', group.length, !!startingPoint);
         if (startingPoint) {
           group = this.takeGroup(startingPoint);
           await Promise.all(
@@ -154,7 +154,7 @@ export class TilesComponentComponent implements OnInit {
   }
 
   pickRandom<T>(arr: T[]) {
-    return arr[Math.floor(Math.random() * this.moved.length)];
+    return arr[Math.floor(Math.random() * arr.length)];
   }
 
   takeGroup(
