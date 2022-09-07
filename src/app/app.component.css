@@ -5,14 +5,12 @@ img {
 }
 
 .A0 {
-  position: relative;
   float: left;
   height: 100vh;
   width: 100vw;
 }
 
 .A1 {
-  position: relative;
   float: left;
   bottom: 0;
   height: 100%;
@@ -22,7 +20,6 @@ img {
 
 .A2 {
   float: left;
-  position: relative;
   height: 100%;
   width: 60%;
   overflow: hidden;
@@ -31,7 +28,6 @@ img {
 
 .A3 {
   float: left;
-  position: relative;
   height: 100%;
   width: 20%;
   background-color: rgb(88, 199, 199);
