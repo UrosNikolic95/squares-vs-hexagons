@@ -49,11 +49,13 @@ p {
 a {
   font-size: 30px;
   text-decoration: none;
+  font-weight: bold;
   color: black;
   text-align: center;
   display: block;
   width: 100%;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: rgb(66, 230, 175);
 }
 
