@@ -1,0 +1,62 @@
+img {
+  position: relative;
+  width: 100%;
+  background-color: aquamarine;
+}
+
+.A0 {
+  position: relative;
+  float: left;
+  height: 100vh;
+  width: 100vw;
+}
+
+.A1 {
+  position: relative;
+  float: left;
+  bottom: 0;
+  height: 100%;
+  width: 20%;
+  background-color: rgb(88, 199, 199);
+}
+
+.A2 {
+  float: left;
+  position: relative;
+  height: 100%;
+  width: 60%;
+  overflow: hidden;
+  background-color: rgb(180, 227, 227);
+}
+
+.A3 {
+  float: left;
+  position: relative;
+  height: 100%;
+  width: 20%;
+  background-color: rgb(88, 199, 199);
+}
+
+.p1 {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+p {
+  margin: 5px;
+}
+
+a {
+  font-size: 30px;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  display: block;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(66, 230, 175);
+}
+
+a:hover {
+  background-color: rgb(136, 229, 198);
+}
