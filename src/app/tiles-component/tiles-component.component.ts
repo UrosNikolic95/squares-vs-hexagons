@@ -82,20 +82,21 @@ export class TilesComponentComponent implements OnInit {
   async keyup(event: KeyboardEvent) {
     const { key } = event;
     this.currentState = hexTransition(key, this.currentState);
-    this.selectedPoint = calculatePoint(this.selectedPoint, this.currentState);
+    const point = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'w' || key == 'y') {
-      this.selectedPoint.y--;
+      point.y--;
     }
     if (key == 's' || key == 'h') {
-      this.selectedPoint.y++;
+      point.y++;
     }
     if (key == 'a' || key == 'g') {
-      this.selectedPoint.x--;
+      point.x--;
     }
     if (key == 'd' || key == 'j') {
-      this.selectedPoint.x++;
+      point.x++;
     }
-    this.selectedPoint = reversePoint(this.selectedPoint, this.currentState);
+    if (adjancy[pointToString(point)] || ['y', 'h', 'g', 'j'].includes(key))
+      this.selectedPoint = reversePoint(point, this.currentState);
 
     this.tiles.forEach((el) =>
       el.keyup(event, this.currentState, this.selectedPoint)
