@@ -1,32 +1,41 @@
 <div class="field">
-  <app-single-tile-component
-    *ngFor="let point of field"
-    [point]="point"
-    [tiles]="tiles"
-  ></app-single-tile-component>
+  <div
+    class="panning"
+    [style.left.px]="x"
+    [style.top.px]="y"
+    (mousedown)="mouseDown($event)"
+    (mouseup)="mouseUp($event)"
+    (mousemove)="mouseMove($event)"
+  >
+    <app-single-tile-component
+      *ngFor="let point of field"
+      [point]="point"
+      [tiles]="tiles"
+    ></app-single-tile-component>
+  </div>
   <div class="mobile-controlls command-top">
-    <div (touchstart)="func('w')" class="aqua">w</div>
-    <div (touchstart)="func('y')" class="orange">y</div>
+    <div (touchstart)="func('w')" (click)="func('w')" class="aqua">w</div>
+    <div (touchstart)="func('y')" (click)="func('y')" class="orange">y</div>
   </div>
 
   <div class="mobile-controlls command-left">
-    <div (touchstart)="func('a')" class="aqua">a</div>
-    <div (touchstart)="func('g')" class="orange">g</div>
+    <div (touchstart)="func('a')" (click)="func('a')" class="aqua">a</div>
+    <div (touchstart)="func('g')" (click)="func('g')" class="orange">g</div>
   </div>
 
   <div class="mobile-controlls command-bottom">
-    <div (touchstart)="func('s')" class="aqua">s</div>
-    <div (touchstart)="func('h')" class="orange">h</div>
+    <div (touchstart)="func('s')" (click)="func('s')" class="aqua">s</div>
+    <div (touchstart)="func('h')" (click)="func('h')" class="orange">h</div>
   </div>
 
   <div class="mobile-controlls command-rigth">
-    <div (touchstart)="func('d')" class="aqua">d</div>
-    <div (touchstart)="func('j')" class="orange">j</div>
+    <div (touchstart)="func('d')" (click)="func('d')" class="aqua">d</div>
+    <div (touchstart)="func('j')" (click)="func('j')" class="orange">j</div>
   </div>
 
   <div class="mobile-controlls command-corner">
-    <div (touchstart)="func('1')" class="aqua">1</div>
-    <div (touchstart)="func('2')" class="aqua">2</div>
-    <div (touchstart)="func('3')" class="aqua">3</div>
+    <div (touchstart)="func('1')" (click)="func('1')" class="aqua">1</div>
+    <div (touchstart)="func('2')" (click)="func('2')" class="aqua">2</div>
+    <div (touchstart)="func('3')" (click)="func('3')" class="aqua">3</div>
   </div>
 </div>

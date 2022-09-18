@@ -27,9 +27,8 @@ export class TilesComponentComponent implements OnInit {
 
   currentState = State.hex;
 
-  @HostBinding('style.left.px')
   x = 0;
-  @HostBinding('style.top.px')
+
   y = 0;
 
   panning = false;
@@ -49,8 +48,9 @@ export class TilesComponentComponent implements OnInit {
     event.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
+  // @HostListener('mousedown', ['$event'])
   mouseDown(event: MouseEvent) {
+    console.log('???1', event.button, this.x, this.y);
     if (event.button == 0) {
       this.panning = true;
       this.startingPanningPoint = {
@@ -65,13 +65,15 @@ export class TilesComponentComponent implements OnInit {
     event.preventDefault();
   }
 
-  @HostListener('mouseup', ['$event'])
+  // @HostListener('mouseup', ['$event'])
   mouseUp(event: MouseEvent) {
+    console.log('???2', event.button);
     this.panning = false;
   }
 
-  @HostListener('mousemove', ['$event'])
+  // @HostListener('mousemove', ['$event'])
   mouseMove(event: MouseEvent) {
+    console.log('???3', event.button);
     if (this.panning) {
       this.x = this.startingPosition.x + event.x - this.startingPanningPoint.x;
       this.y = this.startingPosition.y + event.y - this.startingPanningPoint.y;

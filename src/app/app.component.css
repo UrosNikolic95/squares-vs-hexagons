@@ -25,17 +25,11 @@ img {
   .game-pannel {
     width: 100%;
   }
-  .mobile-controlls {
-    display: block;
-  }
 }
 
 @media screen and (min-width: 701px) {
   .game-pannel {
     width: 60%;
-  }
-  .mobile-controlls {
-    display: none;
   }
 }
 
