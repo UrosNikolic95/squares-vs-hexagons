@@ -25,11 +25,17 @@ img {
   .game-pannel {
     width: 100%;
   }
+  .mobile-controlls {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 701px) {
   .game-pannel {
     width: 60%;
+  }
+  .mobile-controlls {
+    display: none;
   }
 }
 
@@ -72,4 +78,13 @@ a {
 
 a:hover {
   background-color: rgb(136, 229, 198);
+}
+
+.mobile-button-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  background-color: aqua;
 }

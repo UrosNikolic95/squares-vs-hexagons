@@ -223,4 +223,8 @@ export class TilesComponentComponent implements OnInit {
     x: 0,
     y: 0,
   };
+
+  func(str: string) {
+    console.log(str);
+  }
 }
