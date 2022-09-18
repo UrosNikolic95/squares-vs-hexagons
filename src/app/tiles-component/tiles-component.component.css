@@ -10,12 +10,12 @@
 }
 
 .button-box div {
-  display: inline-block;
-  vertical-align: top;
   margin: 10px;
   height: 30px;
   width: 30px;
   background-color: aqua;
-  text-align: center;
-  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

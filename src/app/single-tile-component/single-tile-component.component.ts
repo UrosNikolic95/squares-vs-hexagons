@@ -138,10 +138,10 @@ export class SingleTileComponentComponent implements OnInit {
   @HostBinding('style.background-color')
   color = pickRandomColour();
 
-  keyup(event: KeyboardEvent, currentState: State, selectedPoint: IPoint) {
+  keyup(key: string, currentState: State, selectedPoint: IPoint) {
     this.currentState = currentState;
     this.selectedPoint = selectedPoint;
-    this.moveLine(event.key);
+    this.moveLine(key);
     this.calculateLocation();
 
     this.shape = {

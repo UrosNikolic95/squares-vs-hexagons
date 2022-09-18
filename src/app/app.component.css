@@ -79,12 +79,3 @@ a {
 a:hover {
   background-color: rgb(136, 229, 198);
 }
-
-.mobile-button-x {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 30px;
-  width: 30px;
-  background-color: aqua;
-}

@@ -80,7 +80,10 @@ export class TilesComponentComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   async keyup(event: KeyboardEvent) {
-    const { key } = event;
+    this.onKeyChange(event.key);
+  }
+
+  async onKeyChange(key: string) {
     this.currentState = hexTransition(key, this.currentState);
     const point = calculatePoint(this.selectedPoint, this.currentState);
     if (key == 'w' || key == 'y') {
@@ -99,7 +102,7 @@ export class TilesComponentComponent implements OnInit {
       this.selectedPoint = reversePoint(point, this.currentState);
 
     this.tiles.forEach((el) =>
-      el.keyup(event, this.currentState, this.selectedPoint)
+      el.keyup(key, this.currentState, this.selectedPoint)
     );
     this.positionRegistration();
 
@@ -224,7 +227,7 @@ export class TilesComponentComponent implements OnInit {
     y: 0,
   };
 
-  func(str: string) {
-    console.log(str);
+  func(key: string) {
+    this.onKeyChange(key);
   }
 }
